@@ -5,13 +5,16 @@ import BookAppointmentModal from "../components/BookAppointmentModal";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
-import Badge from "../components/ui/Badge";
 import { Skeleton } from "../components/ui/Loader";
+import { useSearchParams } from "react-router-dom";
 
 export default function Doctors() {
+  const [searchParams] = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [specialtyFilter, setSpecialtyFilter] = useState("All");
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,17 +23,11 @@ export default function Doctors() {
     const fetchDoctors = async () => {
       try {
         const res = await client.get("/api/doctors");
-
-        console.log("Response:", res.data);
-        console.log("Doctors:", res.data.doctors);
-        console.log("Is Array:", Array.isArray(res.data.doctors));
-        console.log("Full Response:", res.data);
-
         const doctorsData = Array.isArray(res.data?.doctors)
           ? res.data.doctors
+          : Array.isArray(res.data)
+          ? res.data
           : [];
-
-        console.log("Doctors Array:", doctorsData);
 
         setDoctors(doctorsData);
       } catch (err) {
@@ -43,8 +40,6 @@ export default function Doctors() {
 
     fetchDoctors();
   }, []);
-
-  // ---------------- FIXED ----------------
 
   const doctorList = Array.isArray(doctors) ? doctors : [];
 
@@ -70,47 +65,40 @@ export default function Doctors() {
     setIsModalOpen(true);
   };
 
-  // ---------------------------------------
-
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-950 font-sans text-slate-100 flex flex-col justify-between selection:bg-teal-500 selection:text-white">
       <div>
         <Navbar />
 
-        {/* Institutional Hero */}
-        <section className="bg-brand-900 py-16 px-6 relative border-b-4 border-brand-600">
+        {/* Hero Section */}
+        <section className="bg-slate-900 py-16 px-6 relative border-b border-slate-800 overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="max-w-7xl mx-auto text-center text-white relative z-10 space-y-4">
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">
-              Provider Directory
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-teal-500/10 border border-teal-500/20 rounded-full text-xs font-bold text-teal-400">
+              👨‍⚕️ 350+ Board Certified Attending Physicians
+            </div>
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight text-white">
+              NovaCare Provider Directory
             </h1>
 
-            <p className="text-brand-100 text-sm md:text-base max-w-xl mx-auto font-light">
-              Search for NovaCare specialists and book appointments securely.
+            <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto font-normal">
+              Find attending specialists, view clinical experience, and schedule consultations online.
             </p>
           </div>
         </section>
 
-        {/* Filter */}
-        <section className="max-w-7xl mx-auto px-6 -mt-8 relative z-20">
-          <Card bodyClass="p-5 flex flex-col md:flex-row gap-4">
+        {/* Filter Bar */}
+        <section className="max-w-7xl mx-auto px-6 -mt-7 relative z-20">
+          <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-5 shadow-2xl flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder="Search by name or specialty..."
+                placeholder="Search by doctor name or medical specialty..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-teal-500"
                 icon={
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
+                  <svg className="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 }
               />
@@ -120,88 +108,79 @@ export default function Doctors() {
               <select
                 value={specialtyFilter}
                 onChange={(e) => setSpecialtyFilter(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-bold text-white focus:outline-none focus:border-teal-500 transition-all cursor-pointer"
               >
                 {specialties.map((specialty) => (
                   <option key={specialty} value={specialty}>
-                    {specialty}
+                    Specialty: {specialty}
                   </option>
                 ))}
               </select>
             </div>
-          </Card>
+          </div>
         </section>
 
-        {/* Doctors */}
+        {/* Doctors Grid */}
         <section className="max-w-7xl mx-auto px-6 py-12">
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Skeleton className="h-72 rounded-2xl" />
-              <Skeleton className="h-72 rounded-2xl" />
-              <Skeleton className="h-72 rounded-2xl" />
-              <Skeleton className="h-72 rounded-2xl" />
+              <Skeleton className="h-80 rounded-3xl" />
+              <Skeleton className="h-80 rounded-3xl" />
+              <Skeleton className="h-80 rounded-3xl" />
+              <Skeleton className="h-80 rounded-3xl" />
             </div>
           ) : filteredDoctors.length === 0 ? (
-            <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center text-slate-400 shadow-sm max-w-xl mx-auto">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center text-slate-400 shadow-2xl max-w-xl mx-auto">
               <span className="text-5xl block mb-3">👨‍⚕️</span>
-              <p className="font-semibold text-lg">
-                No matching specialist profiles found
-              </p>
+              <p className="font-bold text-lg text-white">No specialist profiles found</p>
+              <p className="text-xs text-slate-500 mt-1">Try clearing search filters or checking spelling.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in duration-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in duration-300">
               {filteredDoctors.map((doc) => (
-                <Card
+                <div
                   key={doc._id}
-                  hoverEffect
-                  bodyClass="p-0 flex flex-col justify-between h-full"
-                  className="overflow-hidden"
+                  className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:border-teal-500/40 transition-all duration-300 group shadow-xl"
                 >
-                  <div className="p-6 text-center space-y-4">
-                    <div className="w-20 h-20 bg-brand-50 border border-brand-100 rounded-full flex items-center justify-center text-2xl font-extrabold text-brand-700 shadow-sm mx-auto group-hover:scale-105 transition-transform duration-300">
+                  <div className="space-y-4">
+                    <div className="w-16 h-16 bg-teal-500/10 border border-teal-500/20 rounded-2xl flex items-center justify-center text-3xl font-extrabold text-teal-400 shadow-inner group-hover:scale-105 transition-transform duration-300">
                       {doc.name?.charAt(0) || "D"}
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 leading-tight">
+                      <h3 className="text-base font-bold text-white leading-snug group-hover:text-teal-400 transition-colors">
                         {doc.name}
                       </h3>
-
-                      <p className="text-brand-700 text-xs font-bold uppercase tracking-wider mt-1">
-                        {doc.specialty}
+                      <p className="text-teal-400 text-xs font-bold tracking-wider mt-1">
+                        {doc.specialty || "General Specialist"}
                       </p>
                     </div>
 
-                    <div className="space-y-1.5 text-xs text-slate-500 font-semibold border-t border-slate-50 pt-4 text-left">
+                    <div className="space-y-2 text-xs text-slate-400 font-medium border-t border-slate-800 pt-4">
                       {doc.yearsExperience && (
                         <div className="flex justify-between">
-                          <span className="text-slate-400">Experience:</span>
-                          <span className="text-slate-700">
-                            {doc.yearsExperience} years
-                          </span>
+                          <span className="text-slate-500">Experience:</span>
+                          <span className="text-slate-200 font-bold">{doc.yearsExperience} Years</span>
                         </div>
                       )}
-
                       {doc.licenseNumber && (
                         <div className="flex justify-between">
-                          <span className="text-slate-400">License:</span>
-                          <span className="text-slate-700">
-                            {doc.licenseNumber}
-                          </span>
+                          <span className="text-slate-500">License:</span>
+                          <span className="text-slate-200 font-semibold">{doc.licenseNumber}</span>
                         </div>
                       )}
                     </div>
                   </div>
 
-                  <div className="p-4 bg-slate-50/50 border-t border-slate-50">
+                  <div className="pt-6">
                     <Button
                       onClick={() => handleBookAppointment(doc)}
-                      className="w-full text-xs py-2.5"
+                      className="w-full text-xs py-3 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-teal-500/10 transition-all"
                     >
                       Book Consultation
                     </Button>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
           )}
@@ -215,8 +194,8 @@ export default function Doctors() {
         onSuccess={() => console.log("Appointment booked successfully")}
       />
 
-      <footer className="bg-slate-900 border-t border-slate-100 py-10 text-center text-slate-400 text-sm font-semibold mt-auto">
-        <p>&copy; {new Date().getFullYear()} NovaCare Medical Center. All rights reserved.</p>
+      <footer className="bg-slate-950 border-t border-slate-800 py-10 text-center text-slate-500 text-xs font-semibold mt-auto">
+        <p>&copy; {new Date().getFullYear()} NovaCare Hospital System. All rights reserved.</p>
       </footer>
     </div>
   );

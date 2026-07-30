@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: novacare-api
+    env: node
+    plan: free
+    region: ohio
+    rootDir: MediLink_Backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false # You will paste your MongoDB Atlas URI in the Render Dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false # You will paste your Vercel URL in the Render Dashboard

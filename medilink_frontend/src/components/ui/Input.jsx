@@ -39,7 +39,7 @@ export default function Input({
             ${icon ? "pl-10" : "pl-4"}
             ${error 
               ? "border-rose-300 focus:ring-rose-500/20 focus:border-rose-500" 
-              : "border-slate-200 focus:ring-teal-500/20 focus:border-teal-500"
+              : "border-slate-200 focus:ring-brand-500/20 focus:border-brand-500"
             }`}
           {...props}
         />

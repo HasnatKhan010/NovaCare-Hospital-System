@@ -60,7 +60,6 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
       }
 
-      // If remember me is checked, we can save email
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", formData.email);
       } else {
@@ -70,7 +69,7 @@ const Login = () => {
       if (role.toLowerCase() === "admin") {
         navigate("/admin/dashboard");
       } else {
-        navigate("/user/home");
+        navigate("/portal/home");
       }
     } catch (err) {
       console.error("Login Error:", err);
@@ -82,20 +81,26 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6 font-sans">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-100 overflow-hidden border border-slate-100">
-        <div className="bg-teal-600 px-8 py-10 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-white opacity-5 pattern-dots"></div>
-          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl mx-auto mb-4 border border-white/20">
-            M
+      <div className="absolute top-6 left-6">
+        <Link to="/" className="text-brand-700 font-bold flex items-center gap-2 hover:text-brand-900 transition-colors">
+          <span>&larr;</span> Back to Home
+        </Link>
+      </div>
+      
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+        <div className="bg-brand-900 px-8 py-10 text-center relative overflow-hidden">
+          <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white font-display font-extrabold text-2xl mx-auto mb-4 border border-white/20 shadow-inner">
+            N
           </div>
-          <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Welcome Back</h1>
-          <p className="text-teal-100 text-sm font-medium">Log in to manage your medical ecosystem</p>
+          <h1 className="text-3xl font-display font-bold text-white mb-2 tracking-tight">Patient Portal</h1>
+          <p className="text-brand-100 text-sm font-light">Secure access to your medical records</p>
         </div>
 
         <div className="p-8 space-y-6">
           {error && (
-            <div className="bg-rose-50 text-rose-600 px-4 py-3 rounded-2xl text-sm font-medium text-center border border-rose-100 animate-in fade-in duration-200">
-              ⚠️ {error}
+            <div className="bg-rose-50 text-rose-700 px-4 py-3 rounded-lg text-sm font-medium border border-rose-200 flex items-center gap-2">
+              <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path></svg>
+              {error}
             </div>
           )}
 
@@ -135,23 +140,23 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-10 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+                className="absolute right-4 top-10 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none text-sm font-medium"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 text-slate-600 font-semibold cursor-pointer">
+              <label className="flex items-center gap-2 text-slate-600 font-medium cursor-pointer">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-slate-300 text-teal-600 focus:ring-teal-500 w-4 h-4 cursor-pointer"
+                  className="rounded border-slate-300 text-brand-700 focus:ring-brand-600 w-4 h-4 cursor-pointer"
                 />
                 Remember Me
               </label>
-              <Link to="/choose-role" className="text-teal-600 hover:text-teal-700 font-semibold hover:underline">
+              <Link to="/choose-role" className="text-brand-700 hover:text-brand-900 font-semibold hover:underline">
                 Forgot password?
               </Link>
             </div>
@@ -159,17 +164,17 @@ const Login = () => {
             <Button
               type="submit"
               loading={loading}
-              className="w-full py-3"
+              className="w-full py-3 bg-brand-700 hover:bg-brand-800"
             >
-              Sign In
+              Sign In to Portal
             </Button>
           </form>
 
-          <div className="text-center">
-            <p className="text-slate-500 text-sm font-medium">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-teal-600 hover:text-teal-700 font-bold hover:underline">
-                Create Account
+          <div className="text-center pt-4 border-t border-slate-100">
+            <p className="text-slate-500 text-sm">
+              New patient?{" "}
+              <Link to="/signup" className="text-brand-700 hover:text-brand-900 font-bold hover:underline">
+                Create an account
               </Link>
             </p>
           </div>

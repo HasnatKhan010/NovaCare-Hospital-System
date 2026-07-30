@@ -35,7 +35,7 @@ const AdminLayout = ({ children }) => {
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isCollapsed ? "md:ml-20" : "md:ml-64"}`}>
         {/* Mobile Header Topbar */}
         <header className="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-slate-100 sticky top-0 z-40">
-          <h1 className="text-xl font-bold text-slate-950">MediLink</h1>
+          <h1 className="text-xl font-bold text-slate-950 font-display">NovaCare</h1>
           <button
             onClick={() => setMobileOpen(true)}
             className="p-1 text-slate-600 hover:text-slate-900 focus:outline-none"

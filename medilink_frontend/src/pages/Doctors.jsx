@@ -77,25 +77,15 @@ export default function Doctors() {
       <div>
         <Navbar />
 
-        {/* Hero */}
-        <section className="bg-gradient-to-r from-teal-600 to-teal-800 py-16 px-6 relative overflow-hidden">
-          <div className="absolute inset-0 bg-white/5 opacity-10 pattern-dots"></div>
+        {/* Institutional Hero */}
+        <section className="bg-brand-900 py-16 px-6 relative border-b-4 border-brand-600">
           <div className="max-w-7xl mx-auto text-center text-white relative z-10 space-y-4">
-            <Badge
-              variant="success"
-              size="sm"
-              className="!bg-teal-500/20 !text-teal-100 !border-teal-400/20"
-            >
-              🩺 CLINICAL STAFF
-            </Badge>
-
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-              Find Your Specialist
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">
+              Provider Directory
             </h1>
 
-            <p className="text-teal-100 text-sm md:text-base max-w-xl mx-auto font-medium">
-              Connect with verified clinical doctors and book appointment slots
-              instantly.
+            <p className="text-brand-100 text-sm md:text-base max-w-xl mx-auto font-light">
+              Search for NovaCare specialists and book appointments securely.
             </p>
           </div>
         </section>
@@ -130,7 +120,7 @@ export default function Doctors() {
               <select
                 value={specialtyFilter}
                 onChange={(e) => setSpecialtyFilter(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-200"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200"
               >
                 {specialties.map((specialty) => (
                   <option key={specialty} value={specialty}>
@@ -168,16 +158,16 @@ export default function Doctors() {
                   className="overflow-hidden"
                 >
                   <div className="p-6 text-center space-y-4">
-                    <div className="w-20 h-20 bg-teal-50 border border-teal-100 rounded-full flex items-center justify-center text-2xl font-extrabold text-teal-600 shadow-sm mx-auto group-hover:scale-105 transition-transform duration-300">
+                    <div className="w-20 h-20 bg-brand-50 border border-brand-100 rounded-full flex items-center justify-center text-2xl font-extrabold text-brand-700 shadow-sm mx-auto group-hover:scale-105 transition-transform duration-300">
                       {doc.name?.charAt(0) || "D"}
                     </div>
 
                     <div>
-                      <h3 className="text-base font-extrabold text-slate-900 leading-tight">
+                      <h3 className="text-lg font-bold text-slate-900 leading-tight">
                         {doc.name}
                       </h3>
 
-                      <p className="text-teal-600 text-xs font-bold uppercase tracking-wider mt-1">
+                      <p className="text-brand-700 text-xs font-bold uppercase tracking-wider mt-1">
                         {doc.specialty}
                       </p>
                     </div>
@@ -225,8 +215,8 @@ export default function Doctors() {
         onSuccess={() => console.log("Appointment booked successfully")}
       />
 
-      <footer className="bg-white border-t border-slate-100 py-10 text-center text-slate-400 text-xs font-semibold">
-        <p>&copy; {new Date().getFullYear()} MediLink. All rights reserved.</p>
+      <footer className="bg-slate-900 border-t border-slate-100 py-10 text-center text-slate-400 text-sm font-semibold mt-auto">
+        <p>&copy; {new Date().getFullYear()} NovaCare Medical Center. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -14,9 +14,9 @@ export default function Button({
   const baseStyles = "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
   
   const variants = {
-    primary: "bg-teal-600 hover:bg-teal-700 text-white shadow-lg shadow-teal-600/10 hover:shadow-teal-700/20 focus:ring-teal-500",
+    primary: "bg-brand-700 hover:bg-brand-800 text-white shadow-lg shadow-brand-700/10 hover:shadow-brand-800/20 focus:ring-brand-600",
     secondary: "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 focus:ring-slate-400",
-    outline: "border-2 border-teal-600 text-teal-600 hover:bg-teal-50 focus:ring-teal-500",
+    outline: "border-2 border-brand-700 text-brand-700 hover:bg-brand-50 focus:ring-brand-600",
     danger: "bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/10 hover:shadow-rose-700/20 focus:ring-rose-500",
     ghost: "text-slate-600 hover:bg-slate-50 hover:text-slate-900 focus:ring-slate-400",
   };

@@ -88,18 +88,24 @@ const Signup = () => {
   const strength = getStrengthLabel();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6 font-sans">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-100 overflow-hidden border border-slate-100">
-        <div className="bg-teal-600 px-8 py-8 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-white opacity-5 pattern-dots"></div>
-          <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Create Account</h1>
-          <p className="text-teal-100 text-sm font-medium">Join MediLink healthcare platform today</p>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6 font-sans py-12">
+      <div className="absolute top-6 left-6 hidden md:block">
+        <Link to="/" className="text-brand-700 font-bold flex items-center gap-2 hover:text-brand-900 transition-colors">
+          <span>&larr;</span> Back to Home
+        </Link>
+      </div>
+
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+        <div className="bg-brand-900 px-8 py-8 text-center relative overflow-hidden">
+          <h1 className="text-3xl font-display font-bold text-white mb-2 tracking-tight">Create Account</h1>
+          <p className="text-brand-100 text-sm font-light">Join the NovaCare patient ecosystem</p>
         </div>
 
         <div className="p-8 space-y-6">
           {error && (
-            <div className="bg-rose-50 text-rose-600 px-4 py-3 rounded-2xl text-sm font-medium text-center border border-rose-100 animate-in fade-in duration-200">
-              ⚠️ {error}
+            <div className="bg-rose-50 text-rose-700 px-4 py-3 rounded-lg text-sm font-medium border border-rose-200 flex items-center gap-2">
+              <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path></svg>
+              {error}
             </div>
           )}
 
@@ -137,15 +143,15 @@ const Signup = () => {
             />
 
             <div className="flex flex-col gap-1.5 w-full">
-              <label className="text-sm font-semibold text-slate-700">Account Type (Role)</label>
+              <label className="text-sm font-semibold text-slate-700">Account Type</label>
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 transition-all duration-200 bg-slate-50 focus:bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 transition-all duration-200 bg-slate-50 focus:bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                 required
               >
-                <option value="user">Patient (User)</option>
+                <option value="user">Patient</option>
                 <option value="admin">Administrator (Staff)</option>
               </select>
             </div>
@@ -186,17 +192,17 @@ const Signup = () => {
             <Button
               type="submit"
               loading={loading}
-              className="w-full py-3 mt-2"
+              className="w-full py-3 bg-brand-700 hover:bg-brand-800 mt-2"
             >
               Sign Up
             </Button>
           </form>
 
-          <div className="text-center">
-            <p className="text-slate-500 text-sm font-medium">
+          <div className="text-center pt-4 border-t border-slate-100">
+            <p className="text-slate-500 text-sm">
               Already have an account?{" "}
-              <Link to="/login" className="text-teal-600 hover:text-teal-700 font-bold hover:underline">
-                Sign In
+              <Link to="/login" className="text-brand-700 hover:text-brand-900 font-bold hover:underline">
+                Log In to Portal
               </Link>
             </p>
           </div>

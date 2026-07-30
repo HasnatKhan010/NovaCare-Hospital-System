@@ -87,16 +87,12 @@ export default function Medicines() {
             <div>
                 <Navbar />
 
-                {/* Hero */}
-                <section className="bg-gradient-to-r from-teal-600 to-teal-800 py-16 px-6 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-white/5 opacity-10 pattern-dots"></div>
+                {/* Institutional Hero */}
+                <section className="bg-brand-900 py-16 px-6 relative border-b-4 border-brand-600">
                     <div className="max-w-7xl mx-auto text-center text-white relative z-10 space-y-4">
-                        <Badge variant="success" size="sm" className="!bg-teal-500/20 !text-teal-100 !border-teal-400/20">
-                            💊 PHARMACY INVENTORY
-                        </Badge>
-                        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Online Medical Pharmacy</h1>
-                        <p className="text-teal-100 text-sm md:text-base max-w-xl mx-auto font-medium">
-                            Browse certified medical drugs, dosages, and verify stock availability instantly.
+                        <h1 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">NovaCare E-Pharmacy</h1>
+                        <p className="text-brand-100 text-sm md:text-base max-w-xl mx-auto font-light">
+                            Order prescription medications and have them delivered directly to your door.
                         </p>
                     </div>
                 </section>
@@ -120,7 +116,7 @@ export default function Medicines() {
                             <select
                                 value={statusFilter}
                                 onChange={(e) => setStatusFilter(e.target.value)}
-                                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-200"
+                                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200"
                             >
                                 <option value="All">All Availability Status</option>
                                 <option value="Available">Available</option>
@@ -188,7 +184,7 @@ export default function Medicines() {
                                             <div className="flex items-center justify-between">
                                                 <div>
                                                     <span className="text-[8px] text-slate-400 block font-bold uppercase">Price</span>
-                                                    <span className="text-lg font-extrabold text-teal-600">${group.price ? Number(group.price).toFixed(2) : "0.00"}</span>
+                                                    <span className="text-lg font-extrabold text-brand-700">${group.price ? Number(group.price).toFixed(2) : "0.00"}</span>
                                                 </div>
                                                 <Button
                                                     size="sm"
@@ -209,8 +205,8 @@ export default function Medicines() {
             </div>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-slate-100 py-10 text-center text-slate-400 text-xs font-semibold">
-                <p>&copy; {new Date().getFullYear()} MediLink. All rights reserved.</p>
+            <footer className="bg-slate-900 border-t border-slate-100 py-10 text-center text-slate-400 text-sm font-semibold mt-auto">
+                <p>&copy; {new Date().getFullYear()} NovaCare Medical Center. All rights reserved.</p>
             </footer>
 
             {/* Purchase Popup */}

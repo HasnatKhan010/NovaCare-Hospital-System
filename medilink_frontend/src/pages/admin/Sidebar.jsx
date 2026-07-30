@@ -29,13 +29,13 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       {/* Header */}
       <div className="p-5 border-b border-slate-800 flex items-center justify-between flex-shrink-0">
         {!isCollapsed && (
-          <h2 className="text-xl font-extrabold text-white tracking-tight animate-in fade-in duration-300">
-            MediLink <span className="text-teal-500 text-xs font-semibold uppercase tracking-wider ml-1">Admin</span>
+          <h2 className="text-xl font-display font-extrabold text-white tracking-tight animate-in fade-in duration-300">
+            NovaCare <span className="text-brand-500 text-xs font-semibold uppercase tracking-wider ml-1">Admin</span>
           </h2>
         )}
         {isCollapsed && (
-          <div className="w-8 h-8 bg-teal-600 rounded-xl flex items-center justify-center text-white font-extrabold text-md mx-auto">
-            M
+          <div className="w-8 h-8 bg-brand-700 rounded-xl flex items-center justify-center text-white font-extrabold text-md mx-auto font-display">
+            N
           </div>
         )}
         <button
@@ -59,7 +59,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
               title={isCollapsed ? item.name : undefined}
               className={`flex items-center px-4 py-3 rounded-xl font-semibold transition-all duration-200 group relative
                 ${isActive
-                  ? "bg-teal-600 text-white shadow-lg shadow-teal-600/20"
+                  ? "bg-brand-700 text-white shadow-lg shadow-brand-700/20"
                   : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
                 }`}
             >
@@ -81,12 +81,12 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       <div className="p-4 border-t border-slate-800 flex flex-col gap-3 flex-shrink-0">
         {!isCollapsed && (
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center font-bold text-teal-400 text-sm border border-slate-700">
+            <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center font-bold text-brand-400 text-sm border border-slate-700">
               AD
             </div>
             <div className="flex flex-col min-w-0">
               <span className="text-white text-sm font-semibold truncate">Admin User</span>
-              <span className="text-slate-500 text-xs truncate">admin@medilink.com</span>
+              <span className="text-slate-500 text-xs truncate">admin@novacare.com</span>
             </div>
           </div>
         )}

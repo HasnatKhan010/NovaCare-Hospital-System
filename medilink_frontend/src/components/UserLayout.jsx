@@ -28,8 +28,8 @@ const UserLayout = ({ children }) => {
     <div className="h-full bg-white flex flex-col">
       {/* Brand Header */}
       <div className="p-6 border-b border-slate-50 flex-shrink-0">
-        <h1 className="text-xl font-extrabold text-teal-600 tracking-tight">MediLink</h1>
-        <p className="text-xs text-slate-400 font-semibold tracking-wider uppercase mt-0.5">Patient Portal</p>
+        <h1 className="text-2xl font-display font-extrabold text-brand-700 tracking-tight">NovaCare</h1>
+        <p className="text-xs text-slate-400 font-semibold tracking-wider uppercase mt-1">Patient Portal</p>
       </div>
 
       {/* Nav list */}
@@ -43,7 +43,7 @@ const UserLayout = ({ children }) => {
               onClick={() => setMobileOpen(false)}
               className={`flex items-center px-4 py-3 rounded-xl font-semibold transition-all duration-200
                 ${isActive
-                  ? "bg-teal-50 text-teal-600 border-l-4 border-teal-600"
+                  ? "bg-brand-50 text-brand-700 border-l-4 border-brand-600"
                   : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                 }`}
             >
@@ -57,12 +57,12 @@ const UserLayout = ({ children }) => {
       {/* User Context bottom */}
       <div className="p-4 border-t border-slate-50 flex flex-col gap-3.5 flex-shrink-0">
         <div className="flex items-center gap-3 px-2 py-1">
-          <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center font-bold text-teal-600 text-sm border border-teal-100">
+          <div className="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center font-bold text-brand-700 text-sm border border-brand-100">
             {user.name ? user.name.substring(0, 2).toUpperCase() : "PA"}
           </div>
           <div className="flex flex-col min-w-0">
             <span className="text-slate-800 text-sm font-semibold truncate">{user.name || "Patient"}</span>
-            <span className="text-slate-400 text-xs truncate">{user.email || "patient@medilink.com"}</span>
+            <span className="text-slate-400 text-xs truncate">{user.email || "patient@novacare.com"}</span>
           </div>
         </div>
         <button
@@ -104,7 +104,7 @@ const UserLayout = ({ children }) => {
       <div className="flex-1 flex flex-col min-w-0 md:ml-64">
         {/* Mobile Header topbar */}
         <header className="md:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-slate-100 sticky top-0 z-40">
-          <h1 className="text-xl font-bold text-slate-950">MediLink</h1>
+          <h1 className="text-xl font-bold text-slate-950 font-display">NovaCare</h1>
           <button
             onClick={() => setMobileOpen(true)}
             className="p-1 text-slate-600 hover:text-slate-900 focus:outline-none"

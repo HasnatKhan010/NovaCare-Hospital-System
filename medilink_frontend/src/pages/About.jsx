@@ -6,139 +6,115 @@ export default function About() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-slate-50 font-sans">
             <Navbar />
 
-            {/* Hero Section */}
-            <section className="bg-gradient-to-r from-teal-600 to-blue-600 py-20 px-6">
-                <div className="max-w-7xl mx-auto text-center text-white">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">About MediLink</h1>
-                    <p className="text-teal-100 text-xl max-w-3xl mx-auto leading-relaxed">
-                        Revolutionizing healthcare access through technology and compassion
+            {/* Institutional Header */}
+            <div className="bg-brand-900 text-white py-16 lg:py-24 border-b-4 border-brand-600">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h1 className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-4">Patient & Visitor Information</h1>
+                    <p className="text-lg text-brand-100 max-w-2xl font-light">
+                        Guidelines, resources, and essential information for your visit to NovaCare Medical Center.
                     </p>
                 </div>
-            </section>
+            </div>
 
-            {/* Mission & Vision */}
-            <section className="max-w-7xl mx-auto px-6 py-20">
-                <div className="grid md:grid-cols-2 gap-12">
-                    <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
-                        <div className="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                            🎯
-                        </div>
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Mission</h2>
-                        <p className="text-slate-600 leading-relaxed text-lg">
-                            To make quality healthcare accessible to everyone by connecting patients with the best medical professionals
-                            and services through a seamless digital platform. We believe healthcare should be simple, transparent, and
-                            available to all.
-                        </p>
-                    </div>
-                    <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
-                        <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                            👁️
-                        </div>
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Vision</h2>
-                        <p className="text-slate-600 leading-relaxed text-lg">
-                            To become the most trusted healthcare platform, empowering millions to take control of their health journey.
-                            We envision a future where geographical and financial barriers no longer prevent anyone from receiving
-                            excellent medical care.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Key Features */}
-            <section className="bg-white py-20 px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Why Choose MediLink?</h2>
-                        <p className="text-slate-600 max-w-2xl mx-auto">
-                            We're committed to providing the best healthcare experience
-                        </p>
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div className="text-center p-8">
-                            <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                                ✓
+            <div className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-12">
+                
+                {/* Main Content Area */}
+                <div className="lg:col-span-2 space-y-12">
+                    
+                    <section>
+                        <h2 className="text-2xl font-display font-bold text-brand-900 mb-6 pb-2 border-b border-slate-200">Visiting Hours</h2>
+                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 text-slate-700">
+                            <div className="flex justify-between items-center pb-4 border-b border-slate-100">
+                                <div>
+                                    <h4 className="font-bold text-slate-900">General Wards</h4>
+                                    <p className="text-sm">Medical, Surgical, and Telemetry</p>
+                                </div>
+                                <div className="text-right font-semibold text-brand-700">
+                                    8:00 AM – 8:00 PM
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3">Verified Professionals</h3>
-                            <p className="text-slate-600">
-                                All doctors and healthcare providers are thoroughly verified and licensed
-                            </p>
-                        </div>
-                        <div className="text-center p-8">
-                            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                                🔒
+                            <div className="flex justify-between items-center pb-4 border-b border-slate-100">
+                                <div>
+                                    <h4 className="font-bold text-slate-900">Intensive Care Units (ICU)</h4>
+                                    <p className="text-sm">Immediate family only</p>
+                                </div>
+                                <div className="text-right font-semibold text-brand-700">
+                                    10:00 AM – 6:00 PM
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3">Secure & Private</h3>
-                            <p className="text-slate-600">
-                                Your health data is encrypted and protected with industry-leading security
-                            </p>
-                        </div>
-                        <div className="text-center p-8">
-                            <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                                ⚡
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <h4 className="font-bold text-slate-900">Emergency Department</h4>
+                                    <p className="text-sm">One visitor per patient</p>
+                                </div>
+                                <div className="text-right font-semibold text-brand-700">
+                                    Open 24/7
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3">Fast & Convenient</h3>
-                            <p className="text-slate-600">
-                                Book appointments, order medicines, and access services in minutes
-                            </p>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            {/* Stats */}
-            <section className="max-w-7xl mx-auto px-6 py-20">
-                <div className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-3xl p-12 md:p-16">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-                        <div>
-                            <h3 className="text-4xl md:text-5xl font-bold mb-2">80K+</h3>
-                            <p className="text-teal-100">Happy Patients</p>
-                        </div>
-                        <div>
-                            <h3 className="text-4xl md:text-5xl font-bold mb-2">3,000+</h3>
-                            <p className="text-teal-100">Verified Doctors</p>
-                        </div>
-                        <div>
-                            <h3 className="text-4xl md:text-5xl font-bold mb-2">200+</h3>
-                            <p className="text-teal-100">Partner Hospitals</p>
-                        </div>
-                        <div>
-                            <h3 className="text-4xl md:text-5xl font-bold mb-2">25+</h3>
-                            <p className="text-teal-100">Cities Covered</p>
-                        </div>
-                    </div>
+                    <section>
+                        <h2 className="text-2xl font-display font-bold text-brand-900 mb-6 pb-2 border-b border-slate-200">Visitor Guidelines</h2>
+                        <ul className="list-disc pl-5 space-y-4 text-slate-700 leading-relaxed">
+                            <li><strong>Mask Policy:</strong> Face masks are highly recommended in all clinical areas and required in the Emergency Department and ICUs.</li>
+                            <li><strong>Health Screening:</strong> Please do not visit if you are experiencing symptoms of respiratory illness, fever, or flu.</li>
+                            <li><strong>Children:</strong> Visitors under the age of 12 must be accompanied by an adult at all times.</li>
+                            <li><strong>Quiet Environment:</strong> Please respect the healing environment by keeping noise levels low.</li>
+                        </ul>
+                    </section>
                 </div>
-            </section>
 
-            {/* Contact/CTA */}
-            <section className="max-w-7xl mx-auto px-6 py-20">
-                <div className="bg-white rounded-3xl p-12 md:p-16 text-center shadow-xl border border-gray-100">
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Ready to Get Started?</h2>
-                    <p className="text-slate-600 text-lg mb-10 max-w-2xl mx-auto">
-                        Join thousands of satisfied users who trust MediLink for their healthcare needs
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button
-                            onClick={() => navigate('/signup')}
-                            className="px-10 py-4 bg-teal-600 text-white rounded-xl font-bold text-lg shadow-lg hover:bg-teal-700 hover:shadow-xl transition-all transform hover:-translate-y-1"
-                        >
-                            Create Account
-                        </button>
-                        <button
-                            onClick={() => navigate('/doctors')}
-                            className="px-10 py-4 bg-white text-teal-700 border-2 border-teal-600 rounded-xl font-bold text-lg hover:bg-teal-50 transition-all"
-                        >
-                            Find a Doctor
-                        </button>
+                {/* Sidebar */}
+                <div className="space-y-8">
+                    <div className="bg-brand-50 p-6 rounded-xl border border-brand-100">
+                        <h3 className="text-xl font-bold text-brand-900 mb-4">Contact NovaCare</h3>
+                        <div className="space-y-4 text-sm text-brand-800">
+                            <div>
+                                <strong className="block text-brand-900">Main Hospital Operator</strong>
+                                1-800-NOVA-CARE
+                            </div>
+                            <div>
+                                <strong className="block text-brand-900">Emergency Department</strong>
+                                (555) 123-4567
+                            </div>
+                            <div>
+                                <strong className="block text-brand-900">Address</strong>
+                                123 Healthway Drive<br />
+                                Medical District<br />
+                                City, ST 12345
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+                        <h3 className="text-lg font-bold text-slate-900 mb-2">Need an Appointment?</h3>
+                        <p className="text-sm text-slate-600 mb-6">Current patients can schedule through the Patient Portal. New patients can find a provider online.</p>
+                        <div className="space-y-3">
+                            <button
+                                onClick={() => navigate('/login')}
+                                className="w-full py-2.5 bg-brand-700 text-white rounded-lg font-bold hover:bg-brand-800 transition-colors"
+                            >
+                                Patient Portal
+                            </button>
+                            <button
+                                onClick={() => navigate('/doctors')}
+                                className="w-full py-2.5 bg-slate-100 text-brand-900 border border-slate-200 rounded-lg font-bold hover:bg-slate-200 transition-colors"
+                            >
+                                Find a Doctor
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </section>
+                
+            </div>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-200 py-12 text-center text-slate-500 text-sm">
-                <p>&copy; {new Date().getFullYear()} MediLink. All rights reserved.</p>
+            <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-12">
+                <p>&copy; {new Date().getFullYear()} NovaCare Medical Center. All rights reserved.</p>
             </footer>
         </div>
     );

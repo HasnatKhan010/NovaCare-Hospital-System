@@ -1,123 +1,203 @@
 <div align="center">
-  <img src="medilink_frontend/public/favicon.ico" alt="NovaCare Logo" width="100"/>
-  <h1>🏥 NovaCare Enterprise Hospital System</h1>
-  <p><strong>A Modern, Real-Time Healthcare & Patient Portal Architecture</strong></p>
 
-  <p>
-    <a href="#features">Features</a> •
-    <a href="#architecture">Architecture</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#getting-started">Getting Started</a> •
-    <a href="#deployment">Deployment</a>
-  </p>
-</div>
+# 🏥 NovaCare Hospital System
+### *Enterprise Healthcare Management & Patient Portal Platform*
+
+[![Repository Name](https://img.shields.io/badge/Repository-NovaCare--Hospital--System-0284c7?style=for-the-badge&logo=github)](https://github.com/HasnatKhan010/NovaCare-Hospital-System)
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-v19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-v6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.style=for-the-badge)](LICENSE)
 
 <br/>
 
-## 📖 Overview
+[✨ Features](#-features) •
+[🏗 Architecture](#-architecture) •
+[🛠 Tech Stack](#-tech-stack) •
+[🚀 Getting Started](#-getting-started) •
+[🧪 Testing](#-testing-suite) •
+[🌐 API Reference](#-api-reference) •
+[☁️ Production Deployment](#-production-deployment)
 
-**NovaCare** (formerly MediLink) is a complete, enterprise-grade hospital management system and patient portal. Built to mirror the architecture of real-world institutional healthcare providers (like Mayo Clinic or MyChart), NovaCare seamlessly integrates a public-facing hospital directory with a secure, authenticated patient dashboard. 
-
-Patients can browse departments, securely log in to their private portal, book appointments with specialists, and order prescriptions directly from the hospital pharmacy.
-
----
-
-## ✨ Enterprise Features
-
-### 🛡️ Secure Patient Portal
-- **Role-Based Authentication**: Secure JWT-based login for Patients and Administrators.
-- **Private Dashboard**: All sensitive actions (booking, pharmacy) are locked behind the authenticated portal interface.
-
-### 🩺 Advanced Appointment Booking
-- **Doctor Directory**: Search and filter doctors by specialty, experience, and department.
-- **Real-Time Booking**: Book appointments securely within the patient portal.
-
-### 💊 Integrated Pharmacy
-- **Medication Catalog**: Browse available medicines, prescriptions, and medical supplies.
-- **Direct Ordering**: Patients can request refills and place orders seamlessly.
-
-### 🏥 Institutional UI/UX
-- **Modern Aesthetics**: Built with a custom "Ocean / Medical" design system (Emerald, Deep Navy, Clinical White).
-- **Glassmorphism & Micro-animations**: State-of-the-art frontend styling using Tailwind CSS v3.
-- **Emergency Ready**: Features realistic institutional alerts (e.g., Live ER Wait Times) and visiting hour policies.
+</div>
 
 ---
 
-## 🏗️ Architecture
+## 📖 Executive Summary
 
-NovaCare is built on a modern **MERN** stack microservice architecture, heavily optimized for testing, containerization, and cloud deployment.
+**NovaCare Hospital System** is an enterprise-grade, full-stack healthcare web application and patient portal engineered to reflect real-world clinical institutions (e.g., Mayo Clinic, Cleveland Clinic, MyChart). 
 
-### 💻 Tech Stack
-* **Frontend**: React 18, Vite (Lightning-fast bundler), Tailwind CSS v3, React Router v6.
-* **Backend**: Node.js v18, Express.js (Modularized architecture), JWT Auth, Bcrypt.
-* **Database**: MongoDB (Mongoose ODM).
-* **Testing**: Native `node:test` runner with `Supertest` and zero-dependency Mongoose mocking.
-* **Orchestration**: Docker & Docker Compose (Multi-stage Nginx builds).
+The platform features an institutional hospital portal with real-time ER wait time tracking, department listings, doctor directories, a secure patient portal with JWT authentication, direct online doctor appointment booking, and a integrated hospital pharmacy store.
 
 ---
 
-## 🚀 Getting Started (Local Development)
+## ✨ Features
+
+### 🛡️ Enterprise Patient Portal (`/portal/*`)
+* **Secure Access**: JWT-based authentication for Patients, Staff, and Administrators with auto-logout token expiration handlers.
+* **Integrated Booking**: Search doctors by specialty, view credentials, and book appointments directly inside the private patient dashboard.
+* **Pharmacy Refills**: Browse medications, view dosage information, and order prescriptions directly from the hospital inventory.
+
+### 🏥 Public Institutional Web Portal
+* **Live Hospital Alerts**: Dynamic ticker for ER wait times, masking rules, and visitor guidelines.
+* **Specialist Directory**: Comprehensive directory with experience indicators and department categorization.
+* **Department Insights**: Cardiology, Neurology, Pediatrics, Orthopedics, and Emergency Care overviews.
+
+### 🎨 Modern "Ocean & Medical" Design System
+* Built with custom HSL palette tailored for trust and clean clinical aesthetics.
+* Glassmorphism navigation (`backdrop-blur-xl`), smooth micro-animations, and custom typography (`Outfit` & `Inter`).
+* Responsive design across all desktop, tablet, and mobile breakpoints.
+
+---
+
+## 🏗 System Architecture
+
+```mermaid
+flowchart TD
+    subgraph Client ["Client Layer (Edge CDN / Vercel)"]
+        A[React 19 SPA + React Router v7] -->|Axios REST| B[Vite Bundler & Dev Server]
+    end
+
+    subgraph API ["Backend API Layer (Render Web Service)"]
+        C[Express.js App Router]
+        C --> D[Security: Helmet & Rate Limiter]
+        C --> E[Auth Controller: JWT & Bcrypt]
+        C --> F[Doctors Controller]
+        C --> G[Pharmacy Controller]
+    end
+
+    subgraph Storage ["Database Layer (MongoDB Atlas)"]
+        H[(MongoDB Atlas Cluster)]
+    end
+
+    Client -->|HTTPS / JSON API| API
+    API -->|Mongoose ODM| Storage
+```
+
+---
+
+## 🛠 Tech Stack
+
+| Component | Technologies Used |
+| :--- | :--- |
+| **Frontend Framework** | React 19, React Router v7, Recharts |
+| **Styling & Design** | Tailwind CSS v3, PostCSS, Lucide Icons, Google Fonts (Outfit & Inter) |
+| **Build Tooling** | Vite v6 (ESM HMR Build Engine) |
+| **Backend Runtime** | Node.js v18+, Express.js v5 |
+| **Database & ORM** | MongoDB, Mongoose ODM |
+| **Security & Auth** | JSON Web Tokens (JWT), Bcrypt, Helmet.js, Express-Rate-Limit |
+| **Testing** | Node Native `--test` Runner, Supertest, Custom Mongoose Mocks |
+| **Containerization** | Docker, Multi-Stage Nginx Builds, Docker Compose |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- [Node.js (v18+)](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/) (Local or Atlas)
-- [Docker](https://www.docker.com/) (Optional, for containerized run)
+* **Node.js**: `v18.0.0` or higher
+* **npm**: `v9.0.0` or higher
+* **MongoDB**: Local MongoDB instance or MongoDB Atlas Connection URI
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/HasnatKhan010/NovaCare-Hospital-Management.git
-cd NovaCare-Hospital-Management
-```
+---
 
-### 2. Run with Docker (Recommended)
-If you have Docker installed, you can spin up the entire stack (Database, Backend, Frontend) with a single command:
+### 📦 Quickstart with Docker Compose (Recommended)
+
+To spin up the entire unified microservice stack (Frontend Nginx + Backend Express + MongoDB) in a single command:
+
 ```bash
+# Clone the repository
+git clone https://github.com/HasnatKhan010/NovaCare-Hospital-System.git
+cd NovaCare-Hospital-System
+
+# Spin up all containers
 docker-compose up -d --build
 ```
-*Frontend will be available at `http://localhost`*<br/>
-*Backend API will be available at `http://localhost:5000`*
+- **Frontend Portal**: `http://localhost`
+- **Backend API**: `http://localhost:5000`
 
-### 3. Run Manually
+---
 
-**Backend:**
+### 🔧 Manual Setup for Local Development
+
+#### 1️⃣ Backend Setup
 ```bash
 cd MediLink_Backend
-npm install
-# Set your MONGO_URI in a .env file
-npm start
-```
 
-**Frontend:**
-```bash
-cd medilink_frontend
+# Install dependencies
 npm install
+
+# Environment Variables (.env)
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/medilink
+JWT_SECRET=your_super_secret_jwt_key
+JWT_REFRESH_SECRET=your_super_secret_refresh_key
+
+# Start Development Server
 npm run dev
 ```
 
+#### 2️⃣ Frontend Setup
+```bash
+cd medilink_frontend
+
+# Install dependencies
+npm install
+
+# Environment Variables (.env)
+VITE_API_URL=http://localhost:5000
+
+# Start Frontend Vite Server
+npm start
+```
+
 ---
 
-## 🧪 Testing
+## 🧪 Testing Suite
 
-The backend is equipped with a blazingly fast, zero-dependency integration test suite that utilizes Mongoose mocking to test the API controllers without needing a live database connection.
+NovaCare includes an automated, zero-dependency integration test suite built with Node.js native test runner (`node --test`) and `Supertest`. 
+
+To bypass local C++ Redistributable requirements on Windows, the test suite leverages **Native Mongoose Cursor Mocking** to execute in under **1.2 seconds**.
 
 ```bash
 cd MediLink_Backend
 npm test
 ```
-*Tests execute in < 2 seconds.*
+
+#### Test Coverage Summary:
+- `✔` **Health Checks**: GET `/api/health` & Base Route `/`
+- `✔` **User Auth**: Signup creation (`200 OK`) and Duplicate email rejection (`409 Conflict`)
+- `✔` **Doctor Directory**: Mocked pagination & dataset streaming (`GET /api/doctors`)
 
 ---
 
-## ☁️ Deployment
+## 🌐 API Reference
 
-NovaCare is pre-configured for free-tier cloud deployment using Infrastructure-as-Code.
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| `GET` | `/api/health` | System heartbeat & server uptime | ❌ |
+| `POST` | `/api/auth/signup` | Register new patient account | ❌ |
+| `POST` | `/api/auth/login` | Authenticate user & receive JWT | ❌ |
+| `GET` | `/api/doctors` | Retrieve doctor directory with pagination | ❌ |
+| `POST` | `/api/doctors` | Register new doctor (Admin) | 🔒 Admin |
+| `GET` | `/api/medicines` | Retrieve pharmacy catalog | 🔒 Patient |
+| `POST` | `/api/appointments` | Book specialist appointment | 🔒 Patient |
 
-1. **Backend (Render)**: Deploy directly to Render.com. The included `render.yaml` blueprint will automatically provision the Node web service.
-2. **Frontend (Vercel)**: Deploy to Vercel. The included `vercel.json` ensures that React Router SPA rewrites are handled perfectly on Vercel's Edge network.
-3. **Database**: Use a free M0 cluster on MongoDB Atlas.
+---
+
+## ☁️ Production Deployment
+
+The project is pre-configured for **100% Free** cloud deployment using Infrastructure-as-Code.
+
+### Deployment Stack
+1. **Frontend**: Host on **Vercel** (`medilink_frontend`). The included `vercel.json` automatically manages SPA rewrites for React Router.
+2. **Backend**: Host on **Render** (`MediLink_Backend`). The included `render.yaml` Blueprint provisions the Node.js Web Service automatically.
+3. **Database**: Host on **MongoDB Atlas** (Free M0 Cluster).
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for modern healthcare.</sub>
+  <sub>Designed & Developed for Modern Institutional Healthcare</sub><br/>
+  <b>NovaCare Hospital System &copy; 2026</b>
 </div>

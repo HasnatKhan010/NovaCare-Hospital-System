@@ -33,6 +33,7 @@ export const getAllDoctors = async (req, res) => {
       doctors,
     });
   } catch (err) {
+    console.error("DOCTOR ERROR:", err);
     res.status(500).json({ error: err.message });
   }
 };

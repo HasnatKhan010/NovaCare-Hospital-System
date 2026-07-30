@@ -9,6 +9,7 @@ import NotFound from "../pages/Notfound";
 import Doctors from "../pages/Doctors";
 import Medicines from "../pages/Medicines";
 import About from "../pages/About";
+import Departments from "../pages/Departments";
 
 // Layouts
 import AdminLayout from "../components/AdminLayout";
@@ -27,7 +28,7 @@ import AdminMedicines from "../pages/admin/AdminMedicines";
 import AdminBills from "../pages/admin/AdminBills";
 import AdminNotes from "../pages/admin/AdminNotes";
 
-// User Pages
+// User Pages (Patient Portal)
 import UserHome from "../pages/user/UserHome";
 import Appointment from "../pages/user/Appointment";
 import Medicine from "../pages/user/Medicine";
@@ -45,7 +46,7 @@ const ProtectedRoute = ({ children, role }) => {
   if (role && userRole !== role) {
     return userRole === 'admin'
       ? <Navigate to="/admin/dashboard" replace />
-      : <Navigate to="/user/home" replace />;
+      : <Navigate to="/portal/home" replace />;
   }
 
   return children;
@@ -57,8 +58,9 @@ export default function AppRoutes() {
       {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/doctors" element={<Doctors />} />
-      <Route path="/medicines" element={<Medicines />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/pharmacy" element={<Medicines />} />
+      <Route path="/departments" element={<Departments />} />
+      <Route path="/patient-visitor-info" element={<About />} />
       <Route path="/choose-role" element={<ChooseRole />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
@@ -85,8 +87,8 @@ export default function AppRoutes() {
         </ProtectedRoute>
       } />
 
-      {/* User Routes */}
-      <Route path="/user/*" element={
+      {/* Patient Portal Routes */}
+      <Route path="/portal/*" element={
         <ProtectedRoute role="user">
           <UserLayout>
             <Routes>
@@ -100,6 +102,11 @@ export default function AppRoutes() {
           </UserLayout>
         </ProtectedRoute>
       } />
+
+      {/* Legacy Fallbacks */}
+      <Route path="/about" element={<Navigate to="/patient-visitor-info" replace />} />
+      <Route path="/medicines" element={<Navigate to="/pharmacy" replace />} />
+      <Route path="/user/*" element={<Navigate to="/portal/home" replace />} />
 
       {/* Catch-all */}
       <Route path="*" element={<NotFound />} />

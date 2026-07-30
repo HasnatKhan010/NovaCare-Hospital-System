@@ -23,64 +23,61 @@ export default function Navbar() {
     if (userRole === 'admin') {
       navigate("/admin/dashboard");
     } else {
-      navigate("/user/home");
+      navigate("/portal/home");
     }
   };
 
+  const navLinks = [
+    { name: "Departments", path: "/departments" },
+    { name: "Find a Doctor", path: "/doctors" },
+    { name: "Pharmacy", path: "/pharmacy" },
+    { name: "Patient & Visitor Info", path: "/patient-visitor-info" },
+  ];
+
   return (
-    <nav className="w-full bg-white/80 backdrop-blur-md border-b border-teal-50 sticky top-0 z-50 transition-all duration-300">
+    <nav className="w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-teal-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-teal-200 group-hover:scale-105 transition-transform">
-            M
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-12 h-12 bg-brand-700 rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl shadow-md group-hover:bg-brand-800 transition-all duration-300">
+            N
           </div>
           <div className="flex flex-col">
-            <span className="text-teal-700 text-xl font-bold leading-none tracking-tight">MediLink</span>
-            <span className="text-slate-400 text-xs font-medium tracking-widest uppercase">Healthcare</span>
+            <span className="text-brand-900 font-display text-2xl font-extrabold leading-none tracking-tight">NovaCare</span>
+            <span className="text-slate-500 text-xs font-semibold tracking-widest uppercase mt-0.5">Medical Center</span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex items-center gap-8 text-slate-600 font-medium">
-          {["Home", "Doctors", "Medicines", "About"].map((item) => (
-            <li key={item}>
+        <ul className="hidden lg:flex items-center gap-8 text-slate-700 font-medium text-sm tracking-wide uppercase">
+          {navLinks.map((item) => (
+            <li key={item.name}>
               <Link
-                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                className="hover:text-teal-600 transition-colors relative group py-2"
+                to={item.path}
+                className="hover:text-brand-700 transition-colors relative group py-2"
               >
-                {item}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
+                {item.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
           ))}
-          {isLoggedIn && userRole === 'user' && (
-            <li>
-              <Link
-                to="/user/appointments"
-                className="hover:text-teal-600 transition-colors relative group py-2"
-              >
-                My Appointments
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-          )}
         </ul>
 
         {/* Desktop CTA */}
-        <div className="hidden md:block flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
               <button
                 onClick={handleDashboard}
-                className="text-teal-600 font-semibold hover:text-teal-800 transition-colors"
+                className="text-brand-700 font-semibold hover:text-brand-900 transition-colors flex items-center gap-2"
               >
-                Dashboard
+                <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                {userRole === 'admin' ? 'Admin Panel' : 'Patient Portal'}
               </button>
               <button
                 onClick={handleLogout}
-                className="bg-red-50 text-red-600 px-6 py-2.5 rounded-xl font-semibold border border-red-100 hover:bg-red-100 transition-all duration-300"
+                className="bg-slate-100 text-slate-600 px-6 py-2.5 rounded-lg font-semibold hover:bg-slate-200 transition-all duration-300"
               >
                 Logout
               </button>
@@ -88,18 +85,18 @@ export default function Navbar() {
           ) : (
             <button
               onClick={handleGetStarted}
-              className="bg-teal-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-teal-200 hover:bg-teal-700 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+              className="bg-brand-700 text-white px-7 py-2.5 rounded-lg font-bold shadow-md hover:bg-brand-800 transition-all duration-300"
             >
-              Get Started
+              Access Patient Portal
             </button>
           )}
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-slate-600 hover:text-teal-600 focus:outline-none transition-colors"
+            className="text-slate-700 hover:text-brand-700 focus:outline-none transition-colors"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -110,38 +107,29 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-xl py-4 px-6 flex flex-col gap-4 animate-in slide-in-from-top-5 duration-200">
-          {["Home", "Doctors", "Medicines", "About"].map((item) => (
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-xl py-4 px-6 flex flex-col gap-4">
+          {navLinks.map((item) => (
             <Link
-              key={item}
-              to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-              className="text-slate-600 font-medium hover:text-teal-600 hover:bg-teal-50 px-4 py-3 rounded-xl transition-all"
+              key={item.name}
+              to={item.path}
+              className="text-slate-700 font-medium hover:text-brand-700 hover:bg-slate-50 px-4 py-3 rounded-lg transition-all"
               onClick={() => setMenuOpen(false)}
             >
-              {item}
+              {item.name}
             </Link>
           ))}
-          {isLoggedIn && userRole === 'user' && (
-            <Link
-              to="/user/appointments"
-              className="text-slate-600 font-medium hover:text-teal-600 hover:bg-teal-50 px-4 py-3 rounded-xl transition-all"
-              onClick={() => setMenuOpen(false)}
-            >
-              My Appointments
-            </Link>
-          )}
 
           {isLoggedIn ? (
             <>
               <button
                 onClick={() => { setMenuOpen(false); handleDashboard(); }}
-                className="bg-teal-50 text-teal-600 px-6 py-3 rounded-xl font-semibold hover:bg-teal-100 transition-all w-full text-left"
+                className="bg-brand-50 text-brand-700 px-6 py-3 rounded-lg font-semibold hover:bg-brand-100 transition-all w-full text-left"
               >
-                Dashboard
+                {userRole === 'admin' ? 'Admin Panel' : 'Patient Portal'}
               </button>
               <button
                 onClick={() => { setMenuOpen(false); handleLogout(); }}
-                className="bg-red-50 text-red-600 px-6 py-3 rounded-xl font-semibold hover:bg-red-100 transition-all w-full text-left"
+                className="bg-slate-100 text-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-slate-200 transition-all w-full text-left"
               >
                 Logout
               </button>
@@ -149,9 +137,9 @@ export default function Navbar() {
           ) : (
             <button
               onClick={() => { setMenuOpen(false); handleGetStarted(); }}
-              className="bg-teal-600 text-white px-6 py-3 rounded-xl font-semibold shadow-md active:scale-95 transition-all w-full"
+              className="bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-md transition-all w-full"
             >
-              Get Started
+              Access Patient Portal
             </button>
           )}
         </div>

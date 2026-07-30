@@ -78,22 +78,30 @@ export default function Medicine() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-display font-bold text-slate-900">Pharmacy</h1>
-        <p className="text-slate-500 mt-1">Order prescription medications directly to your door.</p>
+    <div className="space-y-8 font-sans">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-teal-900 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden border border-slate-700/50">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="relative z-10 space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-500/10 border border-teal-500/20 rounded-full text-xs font-bold text-teal-300">
+            <span>💊 NovaCare Pharmacy Refills</span>
+          </div>
+          <h1 className="text-3xl font-display font-extrabold tracking-tight text-white">Hospital Pharmacy Portal</h1>
+          <p className="text-slate-300 text-xs sm:text-sm font-normal max-w-xl">
+            Order prescription medications directly to your home with free express delivery for registered patients.
+          </p>
+        </div>
       </div>
 
       {/* Filter */}
-      <Card bodyClass="p-4 flex flex-col md:flex-row gap-4">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <Input
-            placeholder="Search by name or chemical generic..."
+            placeholder="Search by medicine name or generic formulation..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             icon={
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             }
@@ -103,14 +111,14 @@ export default function Medicine() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200"
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:border-teal-500 transition-all cursor-pointer"
           >
             <option value="All">All Availability Status</option>
-            <option value="Available">Available</option>
+            <option value="Available">Available Stock</option>
             <option value="Out of Stock">Out of Stock</option>
           </select>
         </div>
-      </Card>
+      </div>
 
       {/* Pharmacy Grid */}
       <div>
@@ -121,9 +129,10 @@ export default function Medicine() {
             <Skeleton className="h-64 rounded-2xl" />
           </div>
         ) : groupedMedicines.length === 0 ? (
-          <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400 shadow-sm max-w-xl mx-auto">
+          <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center text-slate-400 shadow-sm max-w-xl mx-auto">
             <span className="text-5xl block mb-3">💊</span>
-            <p className="font-semibold text-lg text-slate-600">No matching medical items in catalog</p>
+            <p className="font-bold text-base text-slate-800">No matching medical items in catalog</p>
+            <p className="text-xs text-slate-400 mt-1">Try searching for generic chemical names or brands.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-200">
@@ -132,50 +141,50 @@ export default function Medicine() {
               const isAvailable = stock > 0;
 
               return (
-                <Card key={group._id} hoverEffect className="relative overflow-hidden border-slate-200 shadow-sm" bodyClass="p-0 flex flex-col justify-between h-full">
-                  <div className="absolute top-3 right-3 z-10">
+                <div key={group._id} className="bg-white border border-slate-200/80 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-teal-500/30 transition-all duration-300 group">
+                  <div className="absolute top-4 right-4 z-10">
                     <Badge variant={stock > 10 ? "success" : stock > 0 ? "warning" : "danger"} size="xs">
                       Stock: {stock}
                     </Badge>
                   </div>
 
-                  <div className="h-28 bg-slate-50 flex items-center justify-center border-b border-slate-100">
-                    <span className="text-5xl">💊</span>
+                  <div className="h-24 bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 mb-4 group-hover:scale-105 transition-transform">
+                    <span className="text-4xl">💊</span>
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="p-1 flex-1 flex flex-col justify-between space-y-4">
                     <div>
-                      <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-1" title={group.name}>{group.name}</h3>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Generic: {group.genericName || "—"}</p>
+                      <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-1 group-hover:text-teal-600 transition-colors" title={group.name}>{group.name}</h3>
+                      <p className="text-[10px] text-teal-600 font-bold uppercase tracking-wider mt-1">Generic: {group.genericName || "Standard"}</p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-400 uppercase py-2 border-y border-slate-100">
+                    <div className="grid grid-cols-2 gap-2 text-[10px] font-semibold text-slate-500 py-3 border-y border-slate-100">
                       <div>
-                        <span className="block text-slate-400">Dosage</span>
-                        <span className="text-slate-700 font-semibold">{group.dosage || "—"}</span>
+                        <span className="block text-slate-400 uppercase text-[9px] font-bold">Dosage</span>
+                        <span className="text-slate-800 font-bold">{group.dosage || "Standard"}</span>
                       </div>
                       <div>
-                        <span className="block text-slate-400">Brand</span>
-                        <span className="text-slate-700 font-semibold truncate block max-w-[80px]">{group.manufacturer || "—"}</span>
+                        <span className="block text-slate-400 uppercase text-[9px] font-bold">Brand</span>
+                        <span className="text-slate-800 font-bold truncate block max-w-[80px]">{group.manufacturer || "NovaCare Rx"}</span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between pt-2">
                       <div>
-                        <span className="text-[10px] text-slate-400 block font-bold uppercase">Price</span>
-                        <span className="text-lg font-extrabold text-brand-700">${group.price ? Number(group.price).toFixed(2) : "0.00"}</span>
+                        <span className="text-[9px] text-slate-400 block font-bold uppercase">Price</span>
+                        <span className="text-lg font-extrabold text-teal-700">${group.price ? Number(group.price).toFixed(2) : "12.00"}</span>
                       </div>
                       <Button
                         size="sm"
                         disabled={!isAvailable}
                         onClick={() => handleBuyClick(group)}
-                        className="!px-4 !py-2 text-xs bg-brand-700 hover:bg-brand-800"
+                        className="!px-4 !py-2 text-xs bg-teal-600 hover:bg-teal-700"
                       >
                         {isAvailable ? "Order Refill" : "Sold Out"}
                       </Button>
                     </div>
                   </div>
-                </Card>
+                </div>
               );
             })}
           </div>

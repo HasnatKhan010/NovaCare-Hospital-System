@@ -115,7 +115,6 @@ const UserLayout = ({ children }) => {
 
       {/* Main body wrapper */}
       <div className="flex-1 flex flex-col min-w-0 md:ml-64">
-        {/* Top Navbar Header */}
         <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-slate-200/80 sticky top-0 z-20 shadow-sm">
           <div className="flex items-center gap-4">
             <button
@@ -126,11 +125,10 @@ const UserLayout = ({ children }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500">
-              <Link to="/" className="hover:text-teal-600 transition-colors">NovaCare Home</Link>
-              <span>/</span>
-              <span className="text-slate-900 font-bold">Patient Portal</span>
-            </div>
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 bg-teal-500 rounded-xl flex items-center justify-center font-display font-extrabold text-white text-base shadow-md shadow-teal-500/20 group-hover:bg-teal-600 transition-colors">N</div>
+              <span className="text-xl font-bold text-slate-900 font-display group-hover:text-teal-600 transition-colors">NovaCare</span>
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">

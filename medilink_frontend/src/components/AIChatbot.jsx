@@ -7,7 +7,7 @@ export default function AIChatbot() {
     const [messages, setMessages] = useState([
         {
             role: "model",
-            content: "Hello! I am your MediLink AI Assistant. How can I help you navigate the portal or answer general healthcare questions today?"
+            content: "Hello! I am your NovaCare AI Assistant. How can I help you navigate the portal or answer general healthcare questions today?"
         }
     ]);
     const [input, setInput] = useState("");
@@ -68,7 +68,7 @@ export default function AIChatbot() {
                 <button
                     onClick={() => setIsOpen(true)}
                     className="w-14 h-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                    title="Talk to MediLink AI"
+                    title="Talk to NovaCare AI"
                 >
                     <span className="text-2xl">🤖</span>
                 </button>
@@ -84,7 +84,7 @@ export default function AIChatbot() {
                                 🤖
                             </div>
                             <div>
-                                <h4 className="font-extrabold text-sm tracking-wide leading-tight">MediLink AI Assistant</h4>
+                                <h4 className="font-extrabold text-sm tracking-wide leading-tight">NovaCare AI Assistant</h4>
                                 <span className="text-[10px] text-teal-100 font-bold uppercase tracking-wider flex items-center gap-1.5 mt-0.5">
                                     <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                                     Online Helper

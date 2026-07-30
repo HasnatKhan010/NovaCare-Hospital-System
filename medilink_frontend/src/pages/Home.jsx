@@ -444,10 +444,15 @@ export default function Home() {
                     <img
                       src={doc.avatar}
                       alt={doc.name}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400";
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute bottom-2 left-2 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-amber-400 text-[11px] font-bold border border-slate-800">
-                      ⭐ {doc.rating} ({doc.reviews})
+                    <div className="absolute bottom-2 left-2 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-amber-400 text-[11px] font-bold border border-slate-800 flex items-center gap-1 shadow-md">
+                      <span>⭐ {doc.rating}</span>
+                      <span className="text-slate-400">({doc.reviews})</span>
                     </div>
                   </div>
 

@@ -18,7 +18,7 @@ export const chatWithAI = async (req, res) => {
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash",
       systemInstruction: "You are the NovaCare AI Assistant, a helpful virtual assistant on the NovaCare enterprise hospital portal. You answer user queries about the platform, explain features, and provide general health information. You MUST include a disclaimer when users ask about symptoms or medical issues, stating that you are not a substitute for professional medical advice and they should consult a doctor. Do NOT prescribe drugs, do NOT diagnose diseases, and do NOT make definitive medical claims."
     });
 

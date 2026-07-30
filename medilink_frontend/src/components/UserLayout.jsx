@@ -8,11 +8,11 @@ const UserLayout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuItems = [
-    { name: "Dashboard", path: "/user/home", icon: "📊" },
-    { name: "Book Appointment", path: "/doctors", icon: "📅" },
-    { name: "My Appointments", path: "/user/appointments", icon: "📋" },
-    { name: "Buy Medicines", path: "/medicines", icon: "💊" },
-    { name: "My Notes", path: "/user/notes", icon: "📝" },
+    { name: "Dashboard", path: "/portal/home", icon: "📊" },
+    { name: "Book Appointment", path: "/portal/appointment", icon: "📅" },
+    { name: "My Appointments", path: "/portal/appointments", icon: "📋" },
+    { name: "Pharmacy", path: "/portal/medicine", icon: "💊" },
+    { name: "My Notes", path: "/portal/notes", icon: "📝" },
   ];
 
   const handleLogout = () => {

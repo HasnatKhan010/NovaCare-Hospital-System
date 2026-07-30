@@ -1,12 +1,194 @@
-const Medicine = () => {
+import React, { useEffect, useState, useMemo } from "react";
+import client from "../../api/client";
+import PurchasePopup from "../../components/PurchasePopup";
+import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
+import Badge from "../../components/ui/Badge";
+import { Skeleton } from "../../components/ui/Loader";
+
+export default function Medicine() {
+  const [medicines, setMedicines] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const [showPurchasePopup, setShowPurchasePopup] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  useEffect(() => {
+    const fetchMedicines = async () => {
+      try {
+        const res = await client.get("/api/medicines");
+        setMedicines(res.data || []);
+      } catch (err) {
+        console.error("Error fetching medicines:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMedicines();
+  }, [refreshTrigger]);
+
+  const filteredMedicines = medicines.filter(med => {
+    const matchesSearch = med.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          med.genericName?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "All" || med.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const groupedMedicines = useMemo(() => {
+    const groups = {};
+    filteredMedicines.forEach(med => {
+      const name = med.name?.trim();
+      if (!name) return;
+      const key = name.toLowerCase();
+      const stock = med.stock !== undefined ? med.stock : med.quantity || 0;
+
+      if (!groups[key]) {
+        groups[key] = {
+          ...med,
+          _id: med._id,
+          ids: [med._id],
+          medicines: [med],
+          stock: stock,
+          totalStock: stock
+        };
+      } else {
+        groups[key].medicines.push(med);
+        groups[key].ids.push(med._id);
+        groups[key].totalStock += stock;
+      }
+    });
+    return Object.values(groups);
+  }, [filteredMedicines]);
+
+  const handleBuyClick = (group) => {
+    setSelectedMedicine(group);
+    setShowPurchasePopup(true);
+  };
+
+  const handlePurchaseSuccess = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
+
+  const handleClosePopup = () => {
+    setShowPurchasePopup(false);
+    setSelectedMedicine(null);
+  };
+
   return (
-    <div className="p-10 text-center">
-      <h1 className="text-3xl font-bold text-green-600 mb-4">
-        Buy Medicine
-      </h1>
-      <p className="text-gray-600">Here user will browse and order medicines.</p>
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-display font-bold text-slate-900">Pharmacy</h1>
+        <p className="text-slate-500 mt-1">Order prescription medications directly to your door.</p>
+      </div>
+
+      {/* Filter */}
+      <Card bodyClass="p-4 flex flex-col md:flex-row gap-4">
+        <div className="flex-1">
+          <Input
+            placeholder="Search by name or chemical generic..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            icon={
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            }
+          />
+        </div>
+        <div className="flex flex-col gap-1 w-full md:max-w-xs justify-center">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all duration-200"
+          >
+            <option value="All">All Availability Status</option>
+            <option value="Available">Available</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+        </div>
+      </Card>
+
+      {/* Pharmacy Grid */}
+      <div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64 rounded-2xl" />
+          </div>
+        ) : groupedMedicines.length === 0 ? (
+          <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400 shadow-sm max-w-xl mx-auto">
+            <span className="text-5xl block mb-3">💊</span>
+            <p className="font-semibold text-lg text-slate-600">No matching medical items in catalog</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-200">
+            {groupedMedicines.map((group) => {
+              const stock = group.totalStock;
+              const isAvailable = stock > 0;
+
+              return (
+                <Card key={group._id} hoverEffect className="relative overflow-hidden border-slate-200 shadow-sm" bodyClass="p-0 flex flex-col justify-between h-full">
+                  <div className="absolute top-3 right-3 z-10">
+                    <Badge variant={stock > 10 ? "success" : stock > 0 ? "warning" : "danger"} size="xs">
+                      Stock: {stock}
+                    </Badge>
+                  </div>
+
+                  <div className="h-28 bg-slate-50 flex items-center justify-center border-b border-slate-100">
+                    <span className="text-5xl">💊</span>
+                  </div>
+
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-1" title={group.name}>{group.name}</h3>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">Generic: {group.genericName || "—"}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-400 uppercase py-2 border-y border-slate-100">
+                      <div>
+                        <span className="block text-slate-400">Dosage</span>
+                        <span className="text-slate-700 font-semibold">{group.dosage || "—"}</span>
+                      </div>
+                      <div>
+                        <span className="block text-slate-400">Brand</span>
+                        <span className="text-slate-700 font-semibold truncate block max-w-[80px]">{group.manufacturer || "—"}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2">
+                      <div>
+                        <span className="text-[10px] text-slate-400 block font-bold uppercase">Price</span>
+                        <span className="text-lg font-extrabold text-brand-700">${group.price ? Number(group.price).toFixed(2) : "0.00"}</span>
+                      </div>
+                      <Button
+                        size="sm"
+                        disabled={!isAvailable}
+                        onClick={() => handleBuyClick(group)}
+                        className="!px-4 !py-2 text-xs bg-brand-700 hover:bg-brand-800"
+                      >
+                        {isAvailable ? "Order Refill" : "Sold Out"}
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {showPurchasePopup && selectedMedicine && (
+        <PurchasePopup
+          medicine={selectedMedicine}
+          onClose={handleClosePopup}
+          onSuccess={handlePurchaseSuccess}
+        />
+      )}
     </div>
   );
-};
-
-export default Medicine;
+}

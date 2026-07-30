@@ -7,18 +7,19 @@ export default function Home() {
   const [selectedCampus, setSelectedCampus] = useState(0);
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeFaq, setActiveFaq] = useState(null);
 
   const campuses = [
     {
       id: "main",
       name: "NovaCare Main Medical Campus & ER",
-      type: "Level 1 Trauma Center",
+      type: "Level 1 Trauma Center & Main Hospital",
       waitTime: "12 min",
       status: "Open 24/7",
-      address: "123 Healthway Blvd, Medical District",
+      address: "First Ave & 16th St, New York, NY 10003",
       phone: "1-800-555-NOVA",
-      coordinates: { x: "45%", y: "40%" },
-      features: ["24/7 Emergency", "Heliport Access", "Surgical Suites", "ICU"]
+      mapEmbedUrl: "https://maps.google.com/maps?q=Bellevue%20Hospital%20Center%20New%20York&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      features: ["24/7 Level 1 Emergency", "Heliport Access", "Surgical Suites", "ICU Beds"]
     },
     {
       id: "children",
@@ -26,21 +27,21 @@ export default function Home() {
       type: "Pediatric Emergency Pavilion",
       waitTime: "8 min",
       status: "Open 24/7",
-      address: "450 Care Pediatrics Way",
+      address: "550 1st Ave, New York, NY 10016",
       phone: "1-800-555-KIDS",
-      coordinates: { x: "70%", y: "65%" },
-      features: ["Level 4 NICU", "Pediatric ER", "Child Life Specialists"]
+      mapEmbedUrl: "https://maps.google.com/maps?q=Hassenfeld%20Children's%20Hospital%20New%20York&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      features: ["Level 4 NICU", "Pediatric ER", "Child Life Specialists", "Parent Suites"]
     },
     {
       id: "heart",
       name: "Heart & Vascular Specialty Institute",
       type: "Cardiac Center of Excellence",
-      waitTime: "No Wait (By Appt)",
+      waitTime: "By Appointment",
       status: "8:00 AM - 6:00 PM",
-      address: "88 Cardiology Plaza, Suite 400",
+      address: "525 E 68th St, New York, NY 10065",
       phone: "1-800-555-HEART",
-      coordinates: { x: "30%", y: "75%" },
-      features: ["Catheterization Lab", "Cardiac Rehab", "Echocardiography"]
+      mapEmbedUrl: "https://maps.google.com/maps?q=NewYork-Presbyterian%20Hospital%20Weill%20Cornell&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      features: ["Catheterization Lab", "Cardiac Rehab", "3D Echocardiography", "Heart Transplants"]
     },
     {
       id: "outpatient",
@@ -48,60 +49,102 @@ export default function Home() {
       type: "Outpatient Surgical Facility",
       waitTime: "By Appointment",
       status: "7:00 AM - 7:00 PM",
-      address: "1200 Westside Medical Pkwy",
+      address: "1000 10th Ave, New York, NY 10019",
       phone: "1-800-555-SURG",
-      coordinates: { x: "20%", y: "30%" },
-      features: ["Same-Day Surgery", "MRI & CT Diagnostics", "Physical Therapy"]
+      mapEmbedUrl: "https://maps.google.com/maps?q=Mount%20Sinai%20West%20New%20York&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      features: ["Same-Day Surgery", "3T MRI & CT Diagnostics", "Physical Therapy", "Outpatient Rehab"]
     }
   ];
 
   const featuredDoctors = [
     {
       name: "Dr. Sarah Jenkins, MD",
-      specialty: "Cardiology & Heart Failure",
-      experience: "16+ Years Experience",
+      role: "Chief of Cardiology",
+      specialty: "Heart Failure & Interventions",
+      experience: "18+ Yrs Exp",
       rating: "4.9",
-      reviews: "184",
-      image: "👩‍⚕️",
+      reviews: "240",
+      avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
       availableToday: true
     },
     {
       name: "Dr. Marcus Vance, MD",
-      specialty: "Neurosurgeon & Spine Specialist",
-      experience: "20+ Years Experience",
+      role: "Director of Neurosurgery",
+      specialty: "Brain & Spinal Reconstruction",
+      experience: "22+ Yrs Exp",
       rating: "5.0",
-      reviews: "210",
-      image: "👨‍⚕️",
+      reviews: "310",
+      avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
       availableToday: true
     },
     {
       name: "Dr. Elena Rostova, MD",
-      specialty: "Pediatric Oncology",
-      experience: "14+ Years Experience",
+      role: "Lead Oncologist",
+      specialty: "Precision Cancer Immunotherapy",
+      experience: "15+ Yrs Exp",
       rating: "4.9",
-      reviews: "156",
-      image: "👩‍⚕️",
+      reviews: "189",
+      avatar: "https://images.unsplash.com/photo-1594824813566-88855ce78905?auto=format&fit=crop&q=80&w=400",
       availableToday: false
     },
     {
       name: "Dr. James Sterling, MD",
-      specialty: "Orthopedic Joint Surgeon",
-      experience: "18+ Years Experience",
+      role: "Head of Orthopedics",
+      specialty: "Robotic Joint Replacement",
+      experience: "20+ Yrs Exp",
       rating: "5.0",
-      reviews: "320",
-      image: "👨‍⚕️",
+      reviews: "412",
+      avatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400",
       availableToday: true
     }
   ];
 
-  const filteredSpecialties = [
-    { category: "cardiology", icon: "🫀", title: "Heart & Vascular Care", desc: "Leading cardiovascular surgeries, non-invasive imaging, and 24/7 cardiac emergency care." },
-    { category: "neurology", icon: "🧠", title: "Neurology & Brain Health", desc: "Comprehensive treatment for stroke, epilepsy, neurodegenerative diseases, and spine care." },
-    { category: "oncology", icon: "🎗️", title: "Oncology & Cancer Center", desc: "Immunotherapy, precision radiation therapy, and personalized cancer survival programs." },
-    { category: "pediatrics", icon: "👶", title: "Pediatrics & Children's ER", desc: "Child-centered compassionate medical care with Level 4 Neonatal Intensive Care." },
-    { category: "orthopedics", icon: "🦴", title: "Orthopedics & Joint Surgery", desc: "Robotic-assisted joint replacement, sports injury rehabilitation, and spinal reconstruction." },
-    { category: "emergency", icon: "🚨", title: "Level 1 Trauma & Emergency", desc: "Immediate 24/7 critical care, trauma surgical bays, and rapid helicopter transport." }
-  ].filter(item => activeTab === "all" || item.category === activeTab);
+  const specialties = [
+    { category: "cardiology", icon: "🫀", title: "Cardiology & Heart Institute", desc: "Leading cardiovascular surgeries, non-invasive imaging, catheterization, and 24/7 cardiac emergency care.", tag: "Top 10 in Nation" },
+    { category: "neurology", icon: "🧠", title: "Neurology & Brain Health", desc: "Comprehensive treatment for stroke, epilepsy, neurodegenerative diseases, and spinal reconstruction.", tag: "Comprehensive Stroke Center" },
+    { category: "oncology", icon: "🎗️", title: "Oncology & Cancer Center", desc: "Immunotherapy, precision radiation therapy, and personalized cancer survival programs.", tag: "NCI Designated Center" },
+    { category: "pediatrics", icon: "👶", title: "Pediatrics & Children's ER", desc: "Child-centered compassionate medical care with Level 4 Neonatal Intensive Care (NICU).", tag: "Level 4 NICU" },
+    { category: "orthopedics", icon: "🦴", title: "Orthopedics & Joint Surgery", desc: "Robotic-assisted joint replacement, sports injury rehabilitation, and complex bone reconstruction.", tag: "Robotic Surgical Tech" },
+    { category: "emergency", icon: "🚨", title: "Level 1 Trauma & Emergency", desc: "Immediate 24/7 critical care, trauma surgical bays, and rapid helicopter transport.", tag: "24/7 Level 1 Trauma" }
+  ];
+
+  const filteredSpecialties = specialties.filter(item => activeTab === "all" || item.category === activeTab);
+
+  const testimonials = [
+    {
+      quote: "NovaCare's cardiology team saved my life. The digital patient portal made booking appointments and accessing my lab results completely stress-free.",
+      author: "Robert Chen",
+      type: "Cardiology Patient",
+      rating: "5.0"
+    },
+    {
+      quote: "The pediatric ER at NovaCare Children's Pavilion was incredible when my son broke his arm. The staff had him comfortable and treated within minutes.",
+      author: "Amanda Miller",
+      type: "Parent & Patient",
+      rating: "5.0"
+    },
+    {
+      quote: "Navigating prescription refills used to take hours. With NovaCare's integrated pharmacy portal, my medication is delivered straight to my doorstep.",
+      author: "David Miller",
+      type: "Pharmacy Member",
+      rating: "5.0"
+    }
+  ];
+
+  const faqs = [
+    {
+      q: "How do I schedule an appointment with a specialist?",
+      a: "You can book directly online through our Patient Portal, search for doctors by specialty on our 'Find a Doctor' page, or call our 24/7 scheduling desk at 1-800-555-NOVA."
+    },
+    {
+      q: "What should I bring for Emergency Room visits?",
+      a: "Please bring a photo ID, your health insurance card, a list of current medications, and any emergency contact details. Emergency care is provided regardless of insurance status."
+    },
+    {
+      q: "How does the NovaCare Patient Portal work?",
+      a: "Our portal allows you to view lab results, message your care team, pay medical bills online, and request prescription refills securely from any desktop or mobile device."
+    }
+  ];
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -114,8 +157,8 @@ export default function Home() {
     <div className="min-h-screen bg-slate-950 font-sans text-slate-100 selection:bg-teal-500 selection:text-white">
       <Navbar />
 
-      {/* Live Emergency Ticker */}
-      <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white py-2.5 px-6 shadow-lg relative z-20">
+      {/* Emergency Alert Bar */}
+      <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white py-2.5 px-6 shadow-xl relative z-30 border-b border-red-500/30">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-semibold">
           <div className="flex items-center gap-2.5">
             <span className="relative flex h-3 w-3">
@@ -123,189 +166,197 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
             </span>
             <span>
-              <strong>Main Campus ER Wait Time:</strong> <span className="bg-white/20 px-2 py-0.5 rounded text-white font-bold">12 mins</span> • Trauma Bay Ready 24/7
+              <strong>Main Campus ER Live Wait Time:</strong> <span className="bg-white/20 px-2 py-0.5 rounded text-white font-bold">12 mins</span> • Trauma Surgical Bays Open 24/7
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="tel:911" className="bg-white/15 hover:bg-white/25 px-3 py-1 rounded-full font-bold transition-colors border border-white/30">
-              🚨 Emergency: Call 911
+            <a href="tel:911" className="bg-white/15 hover:bg-white/25 px-3.5 py-1 rounded-full font-bold transition-all border border-white/30 hover:scale-105">
+              🚨 Life-Threatening: Call 911
             </a>
-            <button onClick={() => setSelectedCampus(0)} className="hover:underline text-red-100 font-bold hidden md:inline">
-              View Live ER Map ↓
-            </button>
+            <a href="#map-locator" className="hover:underline text-red-100 font-bold hidden md:inline">
+              View Real Interactive Map ↓
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Hero Section */}
+      {/* Hero Section with Cinematic Background & Glass Cards */}
       <section className="relative pt-12 pb-24 lg:pt-20 lg:pb-36 overflow-hidden">
-        {/* Ambient Neon Background Effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-tr from-teal-500/20 via-cyan-500/10 to-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute top-10 right-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Background Image with Dark Gradient Mask */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-25 filter blur-sm scale-105 transform pointer-events-none"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000')` }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/90 to-slate-950 pointer-events-none"></div>
+
+        {/* Ambient Neon Glows */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-tr from-teal-500/20 via-cyan-500/15 to-indigo-500/20 rounded-full blur-[140px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-teal-500/10 border border-teal-500/30 rounded-full text-xs font-bold text-teal-300 shadow-xl shadow-teal-500/5">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-teal-500/10 border border-teal-500/30 rounded-full text-xs font-bold text-teal-300 shadow-xl shadow-teal-500/10">
               <span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></span>
-              <span>Next-Gen Institutional Healthcare</span>
+              <span>Nationally Ranked Hospital System & Research Institute</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white leading-[1.1]">
-              Advanced Medicine. <br />
+              Next-Gen Healthcare. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-cyan-300">
                 Human Compassion.
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-              NovaCare is a top-ranked health system providing world-class medical specialists, 24/7 Level 1 emergency care, and a digital patient portal.
+              NovaCare is a top-ranked health system providing world-class medical specialists, 24/7 Level 1 emergency care, and a digital patient portal to manage your health journey.
             </p>
 
-            {/* Interactive Search Bar */}
-            <form onSubmit={handleSearchSubmit} className="max-w-xl mx-auto pt-2">
-              <div className="relative flex items-center bg-slate-900/90 backdrop-blur-2xl border border-slate-700/80 rounded-2xl p-2 shadow-2xl focus-within:border-teal-500 focus-within:ring-4 focus-within:ring-teal-500/10 transition-all">
-                <span className="pl-3 text-lg">🔍</span>
+            {/* Interactive Doctor & Department Search Bar */}
+            <form onSubmit={handleSearchSubmit} className="max-w-xl mx-auto pt-4">
+              <div className="relative flex items-center bg-slate-900/90 backdrop-blur-2xl border border-slate-700/80 rounded-2xl p-2.5 shadow-2xl focus-within:border-teal-500 focus-within:ring-4 focus-within:ring-teal-500/15 transition-all">
+                <span className="pl-3 text-xl">🔍</span>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search doctors, conditions, or departments..."
+                  placeholder="Search doctors, medical specialties, or conditions..."
                   className="w-full bg-transparent px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none font-medium"
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex-shrink-0"
+                  className="px-6 py-3 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex-shrink-0"
                 >
-                  Search
+                  Search Directory
                 </button>
               </div>
             </form>
 
-            <div className="flex items-center justify-center gap-6 pt-4 text-xs font-semibold text-slate-400">
-              <span className="flex items-center gap-1.5"><span className="text-emerald-400">🟢</span> 42 Specialists On Duty</span>
+            <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs font-semibold text-slate-400">
+              <span className="flex items-center gap-1.5"><span className="text-emerald-400">🟢</span> 42 Attending Specialists On Duty</span>
               <span>•</span>
-              <span className="flex items-center gap-1.5"><span className="text-teal-400">⭐</span> 99.2% Satisfaction Rate</span>
+              <span className="flex items-center gap-1.5"><span className="text-teal-400">⭐</span> 99.2% Patient Satisfaction</span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5"><span className="text-cyan-400">🏆</span> Top 10 National Hospital</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* LIVE INTERACTIVE CAMPUS & EMERGENCY MAP LOCATOR */}
-      <section className="py-16 px-6 max-w-7xl mx-auto">
+      {/* REAL INTERACTIVE GOOGLE MAPS LOCATOR */}
+      <section id="map-locator" className="py-16 px-6 max-w-7xl mx-auto scroll-mt-20">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-xs font-bold text-red-400 mb-3">
-            <span>🗺️ Live Campus Network</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-red-500/10 border border-red-500/20 rounded-full text-xs font-bold text-red-400 mb-3">
+            <span>📍 Real-Time GPS & Map Network</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Emergency & Hospital Campus Locator</h2>
-          <p className="text-slate-400 text-sm mt-2">Select a campus to view real-time ER wait times, available medical facilities, and directions.</p>
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Emergency & Hospital Location Finder</h2>
+          <p className="text-slate-400 text-sm mt-2">Select a regional medical campus below to load real interactive satellite maps and live wait times.</p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
-          {/* Interactive Visual Map Representation */}
-          <div className="lg:col-span-7 bg-slate-950 rounded-2xl border border-slate-800 p-6 relative min-h-[380px] flex flex-col justify-between overflow-hidden group">
-            {/* Grid Pattern overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"></div>
-
-            <div className="relative z-10 flex justify-between items-center">
-              <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-300">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                Interactive Regional Grid
-              </div>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Click pin to inspect</span>
-            </div>
-
-            {/* Interactive Pins on Map */}
-            <div className="relative w-full h-64 my-4">
-              {campuses.map((campus, idx) => (
-                <button
-                  key={campus.id}
-                  onClick={() => setSelectedCampus(idx)}
-                  style={{ top: campus.coordinates.y, left: campus.coordinates.x }}
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 group/pin ${
-                    selectedCampus === idx ? "scale-125 z-20" : "scale-100 opacity-70 hover:opacity-100 z-10"
-                  }`}
-                >
-                  <div className={`relative flex items-center justify-center w-10 h-10 rounded-2xl border ${
-                    selectedCampus === idx 
-                      ? "bg-teal-500 text-white border-white shadow-lg shadow-teal-500/50" 
-                      : "bg-slate-900 text-teal-400 border-teal-500/30 hover:border-teal-400"
-                  }`}>
-                    <span className="text-base font-bold">{idx + 1}</span>
-                    {selectedCampus === idx && (
-                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900 animate-ping"></span>
-                    )}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-2xl">
+          {/* Campus Selector Buttons */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+            {campuses.map((campus, idx) => (
+              <button
+                key={campus.id}
+                onClick={() => setSelectedCampus(idx)}
+                className={`p-4 rounded-2xl text-left border transition-all duration-300 flex flex-col justify-between ${
+                  selectedCampus === idx
+                    ? "bg-gradient-to-r from-teal-500/20 to-teal-600/10 border-teal-500 text-white shadow-lg shadow-teal-500/10"
+                    : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${selectedCampus === idx ? "bg-teal-500 text-white" : "bg-slate-800 text-slate-400"}`}>
+                      Location #{idx + 1}
+                    </span>
+                    <span className="text-xs font-extrabold text-emerald-400">{campus.waitTime}</span>
                   </div>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-slate-900/90 text-white text-[10px] font-bold px-2 py-0.5 rounded border border-slate-800 whitespace-nowrap opacity-0 group-hover/pin:opacity-100 transition-opacity">
-                    {campus.name}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <div className="relative z-10 flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800/80">
-              <span>📍 Showing 4 Primary Regional Centers</span>
-              <span className="text-teal-400 font-bold">Live Data Sync Active</span>
-            </div>
+                  <h4 className="font-bold text-xs leading-snug line-clamp-2">{campus.name}</h4>
+                </div>
+              </button>
+            ))}
           </div>
 
-          {/* Active Campus Information Card */}
-          <div className="lg:col-span-5 space-y-6">
-            {(() => {
-              const current = campuses[selectedCampus];
-              return (
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 bg-teal-500/10 border border-teal-500/20 text-teal-300 rounded-full text-xs font-bold">
-                      {current.type}
-                    </span>
-                    <span className="text-xs font-semibold text-slate-400">{current.status}</span>
-                  </div>
+          {/* Map Display & Live Details Grid */}
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            {/* Real Embedded Google Map Iframe */}
+            <div className="lg:col-span-7 bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-inner h-[380px] relative group">
+              <iframe
+                title={campuses[selectedCampus].name}
+                src={campuses[selectedCampus].mapEmbedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(120%)" }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full"
+              ></iframe>
+              <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800 text-xs font-bold text-white shadow-lg flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                Live GPS Map Active
+              </div>
+            </div>
 
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">{current.name}</h3>
-                    <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-2">
-                      <span>📍</span> {current.address}
-                    </p>
-                  </div>
+            {/* Selected Campus Info Side Card */}
+            <div className="lg:col-span-5 space-y-6">
+              {(() => {
+                const current = campuses[selectedCampus];
+                return (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 bg-teal-500/10 border border-teal-500/20 text-teal-300 rounded-full text-xs font-bold">
+                        {current.type}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-400">{current.status}</span>
+                    </div>
 
-                  {/* ER Wait Banner */}
-                  <div className="bg-gradient-to-r from-red-950/60 to-slate-900 border border-red-500/30 rounded-2xl p-4 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-bold text-red-400 uppercase tracking-wider block">Estimated ER Wait Time</span>
-                      <span className="text-2xl font-extrabold text-white">{current.waitTime}</span>
+                      <h3 className="text-2xl font-bold text-white mb-2">{current.name}</h3>
+                      <p className="text-xs text-slate-300 flex items-center gap-2 font-medium">
+                        <span className="text-teal-400 text-base">📍</span> {current.address}
+                      </p>
                     </div>
-                    <a
-                      href={`tel:${current.phone}`}
-                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md transition-colors"
-                    >
-                      Call Center
-                    </a>
-                  </div>
 
-                  {/* Key Features Pill Group */}
-                  <div>
-                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Campus Facilities</span>
-                    <div className="flex flex-wrap gap-2">
-                      {current.features.map((feat, i) => (
-                        <span key={i} className="px-3 py-1 bg-slate-800 border border-slate-700/80 rounded-xl text-xs font-semibold text-slate-300">
-                          ✓ {feat}
-                        </span>
-                      ))}
+                    {/* ER Wait Time Card */}
+                    <div className="bg-gradient-to-r from-red-950/70 to-slate-950 border border-red-500/30 rounded-2xl p-4 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-bold text-red-400 uppercase tracking-wider block">Estimated Live ER Wait</span>
+                        <span className="text-2xl font-extrabold text-white">{current.waitTime}</span>
+                      </div>
+                      <a
+                        href={`tel:${current.phone}`}
+                        className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md transition-colors"
+                      >
+                        Call Campus
+                      </a>
+                    </div>
+
+                    {/* Facility Tags */}
+                    <div>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Clinical Features</span>
+                      <div className="flex flex-wrap gap-2">
+                        {current.features.map((feat, i) => (
+                          <span key={i} className="px-3 py-1 bg-slate-800 border border-slate-700/80 rounded-xl text-xs font-semibold text-slate-200">
+                            ✓ {feat}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="pt-2 flex gap-3">
+                      <button
+                        onClick={() => navigate("/doctors")}
+                        className="flex-1 py-3.5 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-lg transition-all text-center"
+                      >
+                        Book Specialist at this Campus
+                      </button>
                     </div>
                   </div>
-
-                  {/* Action buttons */}
-                  <div className="pt-2 flex gap-3">
-                    <button
-                      onClick={() => navigate("/doctors")}
-                      className="flex-1 py-3 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-lg transition-all text-center"
-                    >
-                      Find Doctor at this Location
-                    </button>
-                  </div>
-                </div>
-              );
-            })()}
+                );
+              })()}
+            </div>
           </div>
         </div>
       </section>
@@ -314,8 +365,8 @@ export default function Home() {
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
           <div>
-            <div className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-1">Institutes of Clinical Excellence</div>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Specialized Medical Care</h2>
+            <div className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-1">Specialized Institutes</div>
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Clinical Departments & Care</h2>
           </div>
           
           {/* Tab Filter */}
@@ -340,11 +391,16 @@ export default function Home() {
           {filteredSpecialties.map((item, idx) => (
             <div 
               key={idx}
-              className="bg-slate-900/60 p-7 rounded-3xl border border-slate-800 hover:border-teal-500/50 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between"
+              className="bg-slate-900/70 p-8 rounded-3xl border border-slate-800 hover:border-teal-500/50 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between shadow-xl"
             >
               <div>
-                <div className="w-14 h-14 bg-teal-500/10 border border-teal-500/20 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
-                  {item.icon}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 bg-teal-500/10 border border-teal-500/20 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
+                    {item.icon}
+                  </div>
+                  <span className="text-[10px] font-bold text-teal-300 bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-500/20">
+                    {item.tag}
+                  </span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2 group-hover:text-teal-400 transition-colors">
                   {item.title}
@@ -354,12 +410,12 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
                 <Link to="/departments" className="text-xs font-bold text-teal-400 hover:underline">
                   Department Details &rarr;
                 </Link>
                 <Link to="/doctors" className="text-xs font-semibold text-slate-400 hover:text-white">
-                  Specialists
+                  Find Doctor
                 </Link>
               </div>
             </div>
@@ -367,33 +423,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURED DOCTORS SPOTLIGHT */}
+      {/* FEATURED ATTENDING DOCTORS (REAL AVATARS) */}
       <section className="py-20 px-6 bg-slate-900/40 border-y border-slate-800/80">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
             <div>
-              <div className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-1">Top Attending Physicians</div>
+              <div className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-1">Attending Physicians</div>
               <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Board-Certified Specialists</h2>
             </div>
             <button onClick={() => navigate("/doctors")} className="text-xs font-bold text-teal-400 hover:underline">
-              View All 350+ Doctors &rarr;
+              View All 350+ Doctors Directory &rarr;
             </button>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredDoctors.map((doc, idx) => (
-              <div key={idx} className="bg-slate-900 p-6 rounded-3xl border border-slate-800 flex flex-col justify-between hover:border-teal-500/40 transition-all">
+              <div key={idx} className="bg-slate-900 p-6 rounded-3xl border border-slate-800 flex flex-col justify-between hover:border-teal-500/40 transition-all duration-300 group shadow-xl">
                 <div>
-                  <div className="w-16 h-16 bg-teal-500/10 border border-teal-500/20 rounded-2xl flex items-center justify-center text-4xl mb-4">
-                    {doc.image}
+                  <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-4 border border-slate-800">
+                    <img
+                      src={doc.avatar}
+                      alt={doc.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-amber-400 text-[11px] font-bold border border-slate-800">
+                      ⭐ {doc.rating} ({doc.reviews})
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 text-amber-400 text-xs font-bold mb-1">
-                    <span>⭐ {doc.rating}</span>
-                    <span className="text-slate-500">({doc.reviews} reviews)</span>
-                  </div>
+
                   <h3 className="font-bold text-white text-base leading-tight mb-1">{doc.name}</h3>
-                  <p className="text-teal-400 text-xs font-semibold mb-2">{doc.specialty}</p>
-                  <p className="text-slate-400 text-[11px] font-medium">{doc.experience}</p>
+                  <p className="text-teal-400 text-xs font-semibold">{doc.role}</p>
+                  <p className="text-slate-400 text-xs mt-1">{doc.specialty}</p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
@@ -415,12 +475,68 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PATIENT TESTIMONIALS & TRUST */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-xs font-bold text-teal-400 uppercase tracking-wider mb-1">Verified Care Stories</div>
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">What Our Patients Say</h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((item, idx) => (
+            <div key={idx} className="bg-slate-900/80 p-8 rounded-3xl border border-slate-800 flex flex-col justify-between shadow-xl">
+              <div>
+                <div className="text-amber-400 text-sm mb-4">⭐⭐⭐⭐⭐</div>
+                <p className="text-slate-300 text-xs leading-relaxed italic mb-6">"{item.quote}"</p>
+              </div>
+              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                <div>
+                  <h4 className="font-bold text-white text-sm">{item.author}</h4>
+                  <p className="text-teal-400 text-[11px] font-semibold">{item.type}</p>
+                </div>
+                <span className="text-xs font-bold text-emerald-400">Verified Patient ✓</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FREQUENTLY ASKED QUESTIONS */}
+      <section className="py-20 px-6 max-w-4xl mx-auto border-t border-slate-800">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-display font-extrabold text-white">Frequently Asked Questions</h2>
+          <p className="text-slate-400 text-xs mt-2">Common questions about hospital visits, emergency wait times, and portal access.</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <div 
+              key={idx}
+              className="bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden transition-all"
+            >
+              <button
+                onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                className="w-full p-5 text-left font-bold text-sm text-white flex justify-between items-center hover:text-teal-400 transition-colors"
+              >
+                <span>{faq.q}</span>
+                <span className="text-teal-400 text-base">{activeFaq === idx ? "−" : "+"}</span>
+              </button>
+              {activeFaq === idx && (
+                <div className="px-5 pb-5 text-xs text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* PATIENT PORTAL CTA BANNER */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="bg-gradient-to-r from-teal-900 via-slate-900 to-cyan-950 rounded-3xl p-8 sm:p-14 border border-teal-500/30 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-4 max-w-xl relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-500/20 rounded-full text-xs font-bold text-teal-300">
-              🔒 MyChart Encrypted Portal
+              🔒 Encrypted Patient Portal
             </div>
             <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">
               Manage Your Health Online 24/7

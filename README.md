@@ -28,7 +28,6 @@
 
 ![Home Page](assets/1.png)
 ![Locations & Wait Times](assets/2.png)
-![Providers Directory](assets/3.png)
 ![Doctors & Specialists](assets/4.png)
 ![Patient Portal Dashboard](assets/5.png)
 

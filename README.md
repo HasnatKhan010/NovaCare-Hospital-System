@@ -4,6 +4,7 @@
 ### *Enterprise Healthcare Management & Patient Portal Platform*
 
 [![Repository Name](https://img.shields.io/badge/Repository-NovaCare--Hospital--System-0284c7?style=for-the-badge&logo=github)](https://github.com/HasnatKhan010/NovaCare-Hospital-System)
+[![CI](https://github.com/HasnatKhan010/NovaCare-Hospital-System/actions/workflows/ci.yml/badge.svg)](https://github.com/HasnatKhan010/NovaCare-Hospital-System/actions/workflows/ci.yml)
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-v19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-v6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)

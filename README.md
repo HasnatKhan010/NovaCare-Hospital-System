@@ -26,6 +26,8 @@
 
 ---
 
+![NovaCare Hospital System Preview](assets/preview.PNG)
+
 ## 📖 Executive Summary
 
 **NovaCare Hospital System** is an enterprise-grade, full-stack healthcare web application and patient portal engineered to reflect real-world clinical institutions (e.g., Mayo Clinic, Cleveland Clinic, MyChart). 

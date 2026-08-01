@@ -12,7 +12,7 @@ services:
 
   backend:
     build: 
-      context: ./medilink_backend
+      context: ./novacare_backend
       dockerfile: Dockerfile
     container_name: novacare_backend
     ports:
@@ -29,7 +29,7 @@ services:
 
   frontend:
     build:
-      context: ./medilink_frontend
+      context: ./novacare_frontend
       dockerfile: Dockerfile
     container_name: novacare_frontend
     ports:

@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     region: ohio
-    rootDir: MediLink_Backend
+    rootDir: novacare_backend
     buildCommand: npm install
     startCommand: npm start
     envVars:

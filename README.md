@@ -123,7 +123,7 @@ docker-compose up -d --build
 
 #### 1️⃣ Backend Setup
 ```bash
-cd MediLink_Backend
+cd novacare_backend
 
 # Install dependencies
 npm install
@@ -140,7 +140,7 @@ npm run dev
 
 #### 2️⃣ Frontend Setup
 ```bash
-cd medilink_frontend
+cd novacare_frontend
 
 # Install dependencies
 npm install
@@ -161,7 +161,7 @@ NovaCare includes an automated, zero-dependency integration test suite built wit
 To bypass local C++ Redistributable requirements on Windows, the test suite leverages **Native Mongoose Cursor Mocking** to execute in under **1.2 seconds**.
 
 ```bash
-cd MediLink_Backend
+cd novacare_backend
 npm test
 ```
 
@@ -191,8 +191,8 @@ npm test
 The project is pre-configured for **100% Free** cloud deployment using Infrastructure-as-Code.
 
 ### Deployment Stack
-1. **Frontend**: Host on **Vercel** (`medilink_frontend`). The included `vercel.json` automatically manages SPA rewrites for React Router.
-2. **Backend**: Host on **Render** (`MediLink_Backend`). The included `render.yaml` Blueprint provisions the Node.js Web Service automatically.
+1. **Frontend**: Host on **Vercel** (`novacare_frontend`). The included `vercel.json` automatically manages SPA rewrites for React Router.
+2. **Backend**: Host on **Render** (`novacare_backend`). The included `render.yaml` Blueprint provisions the Node.js Web Service automatically.
 3. **Database**: Host on **MongoDB Atlas** (Free M0 Cluster).
 
 ---
